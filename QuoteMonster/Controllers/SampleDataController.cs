@@ -25,12 +25,14 @@ namespace QuoteMonster.Controllers
         [HttpGet("[action]")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
+			var x = _cfg.GetConnectionString("dbmain");
+
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 DateFormatted = DateTime.Now.AddDays(index).ToString("d"),
                 TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)] + " (" + _cfg["MySecret"] + ")"
+                Summary = Summaries[rng.Next(Summaries.Length)] + " (" + _cfg["MySecret"] + ")" + (" ( " + (x == null ? "null" : x.Length.ToString())  + " )")
 			});
         }
 
