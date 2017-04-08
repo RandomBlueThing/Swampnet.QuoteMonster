@@ -13,13 +13,21 @@ namespace QuoteMonster
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+		private string _testSecret = null;
+
+		public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+
+			if (env.IsDevelopment())
+			{
+				builder.AddUserSecrets<Startup>();
+			}
+
             Configuration = builder.Build();
         }
 
@@ -28,8 +36,10 @@ namespace QuoteMonster
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
-            services.AddMvc();
+			_testSecret = Configuration["MySecret"];
+			services.AddSingleton<IConfigurationRoot>(Configuration);
+			// Add framework services.
+			services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +53,7 @@ namespace QuoteMonster
                 app.UseDeveloperExceptionPage();
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions {
                     HotModuleReplacement = true
-                });
+                });				
             }
             else
             {

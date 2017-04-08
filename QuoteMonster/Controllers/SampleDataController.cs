@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace QuoteMonster.Controllers
 {
@@ -14,6 +15,13 @@ namespace QuoteMonster.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
+		private readonly IConfigurationRoot _cfg;
+
+		public SampleDataController(IConfigurationRoot cfg)
+		{
+			_cfg = cfg;
+		}
+
         [HttpGet("[action]")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
@@ -22,8 +30,8 @@ namespace QuoteMonster.Controllers
             {
                 DateFormatted = DateTime.Now.AddDays(index).ToString("d"),
                 TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            });
+                Summary = Summaries[rng.Next(Summaries.Length)] + " (" + _cfg["MySecret"] + ")"
+			});
         }
 
         public class WeatherForecast

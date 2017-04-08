@@ -8,3 +8,5 @@
 - Add QuoteMonster.csproj to solution.
 - F5!
 
+Adding user secrets:
+https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets
