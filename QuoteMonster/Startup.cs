@@ -13,8 +13,6 @@ namespace QuoteMonster
 {
     public class Startup
     {
-		private string _testSecret = null;
-
 		public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -36,8 +34,12 @@ namespace QuoteMonster
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-			_testSecret = Configuration["MySecret"];
+			// Add global cfg.
 			services.AddSingleton<IConfigurationRoot>(Configuration);
+
+			// Add ApplicationInsights
+			services.AddApplicationInsightsTelemetry();
+
 			// Add framework services.
 			services.AddMvc();
         }
