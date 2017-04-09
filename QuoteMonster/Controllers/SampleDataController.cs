@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using QuoteMonster.Model;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace QuoteMonster.Controllers
 {
@@ -16,23 +18,24 @@ namespace QuoteMonster.Controllers
         };
 
 		private readonly IConfigurationRoot _cfg;
+		private readonly PropertyContext _context;
 
-		public SampleDataController(IConfigurationRoot cfg)
+		public SampleDataController(IConfigurationRoot cfg, PropertyContext context)
 		{
 			_cfg = cfg;
+			_context = context;
 		}
 
         [HttpGet("[action]")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
-			var x = _cfg.GetConnectionString("dbmain");
+			var properties = _context.Properties.ToArray();
+			var rng = new Random();
 
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                DateFormatted = DateTime.Now.AddDays(index).ToString("d"),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)] + " (" + _cfg["MySecret"] + ")" + (" ( " + (x == null ? "null" : x.Length.ToString())  + " )")
+			return properties.Select(p => new WeatherForecast() {
+				DateFormatted = p.Name,
+				Summary = p.Value,
+				TemperatureC = rng.Next(-20, 55)
 			});
         }
 
