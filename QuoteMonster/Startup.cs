@@ -40,9 +40,6 @@ namespace QuoteMonster
 			// Add global cfg.
 			services.AddSingleton<IConfigurationRoot>(Configuration);
 
-			// Add ApplicationInsights
-			services.AddApplicationInsightsTelemetry();
-
 			// Add framework services.
 			services.AddMvc();
 			services.AddDbContext<PropertyContext>(options =>
