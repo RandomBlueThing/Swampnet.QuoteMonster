@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using QuoteMonster.Model;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace QuoteMonster.Controllers
 {
@@ -26,7 +27,8 @@ namespace QuoteMonster.Controllers
 			_context = context;
 		}
 
-        [HttpGet("[action]")]
+		[Authorize]
+		[HttpGet("[action]")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
 			var properties = _context.Properties.ToArray();

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 
 @Component({
     selector: 'fetchdata',
@@ -8,8 +8,16 @@ import { Http } from '@angular/http';
 export class FetchDataComponent {
     public forecasts: WeatherForecast[];
 
-    constructor(http: Http) {
-        http.get('/api/SampleData/WeatherForecasts').subscribe(result => {
+	constructor(http: Http) {
+		var jwt = localStorage.getItem('id_token');
+		var authHeader = new Headers();
+		if (jwt) {
+			authHeader.append('Authorization', 'Bearer ' + jwt);
+		}
+
+		http.get('/api/SampleData/WeatherForecasts', {
+			headers: authHeader
+		}).subscribe(result => {
             this.forecasts = result.json() as WeatherForecast[];
         });
     }

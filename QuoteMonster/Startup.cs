@@ -42,6 +42,7 @@ namespace QuoteMonster
 
 			// Add framework services.
 			services.AddMvc();
+			services.AddCors();
 			services.AddDbContext<PropertyContext>(options =>
 				options.UseSqlServer(
 					Configuration.GetConnectionString("dbmain")));
@@ -65,18 +66,25 @@ namespace QuoteMonster
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
+			app.UseCors(cfg =>
+				cfg.AllowAnyOrigin()
+				.AllowAnyHeader()
+				.AllowAnyMethod());
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+			app.UseJwtBearerAuthentication(new JwtBearerOptions
+			{
+				// Had to add this in as per: http://stackoverflow.com/questions/37467620/asp-net-core-rc2-jwt-token-kid-error
+				Authority = $"https://{Configuration["Auth0:Domain"]}/",
+				Audience = Configuration["Auth0:ApiIdentifier"],
+				RequireHttpsMetadata = false
+			});
 
-                routes.MapSpaFallbackRoute(
-                    name: "spa-fallback",
-                    defaults: new { controller = "Home", action = "Index" });
-            });
-        }
+			app.UseDefaultFiles();
+			app.UseStaticFiles();
+			app.UseMvc(routes => routes.MapSpaFallbackRoute("spa-fallback", new {
+				controller = "Home",
+				action = "Index"
+			}));
+		}
     }
 }
