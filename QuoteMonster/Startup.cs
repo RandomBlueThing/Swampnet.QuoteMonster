@@ -81,10 +81,19 @@ namespace QuoteMonster
 
 			app.UseDefaultFiles();
 			app.UseStaticFiles();
-			app.UseMvc(routes => routes.MapSpaFallbackRoute("spa-fallback", new {
-				controller = "Home",
-				action = "Index"
-			}));
+			app.UseMvc(routes => {
+				routes.MapRoute(
+					name: "default",
+					template: "{controller}/{action}/{id?}",
+					defaults: new { controller = "Home", action = "Index" });
+
+				routes.MapSpaFallbackRoute(
+					"spa-fallback", new
+					{
+						controller = "Home",
+						action = "Index"
+					});
+			});
 		}
     }
 }
