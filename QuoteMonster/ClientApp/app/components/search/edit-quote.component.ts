@@ -19,19 +19,21 @@ export class EditQuoteComponent implements OnInit {
 		private location: Location
 	) { }
 
+
 	ngOnInit(): void {
 		this.route.params
 			.switchMap((params: Params) => this.quoteService.getQuote(+params['id']))
 			.subscribe(result => {
 				this.quote = result.json() as Quote;
-				console.log('set result: ' + this.quote.id);
 			});
 	}
 
 
 	save(): void {
-		console.log('@TODO: Save');
-		this.goBack();
+		this.quoteService.save(this.quote).subscribe(result => {
+			this.goBack();
+		});
+		
 	}
 
 

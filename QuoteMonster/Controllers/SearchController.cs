@@ -12,13 +12,19 @@ namespace QuoteMonster.Controllers
     [Produces("application/json")]
     public class SearchController : Controller
     {
+		private readonly QuoteContext _context;
+
+		public SearchController(QuoteContext context)
+		{
+			_context = context;
+		}
 
 		//[Authorize]
 		[HttpGet]
 		[Route("api/Search")]
 		public IEnumerable<Quote> Get()
 		{
-			var repo = new QuoteRepository();
+			var repo = new QuoteRepository(_context);
 
 			return repo.Search();
 		}
@@ -28,17 +34,29 @@ namespace QuoteMonster.Controllers
 		[Route("api/Search/{id?}")]
 		public Quote Get(int id)
 		{
-			var repo = new QuoteRepository();
+			var repo = new QuoteRepository(_context);
 
 			return repo.Search(id);
 		}
 
 
+		//[Authorize]
+		[HttpPost]
+		[Route("api/Save")]
+		public Quote Post([FromBody] Quote quote)
+		{
+			var repo = new QuoteRepository(_context);
+
+			repo.Save(quote);
+
+			return quote;
+		}
+
 		[HttpGet]
 		[Route("api/RandomQuote")]
 		public Quote GetRandom()
 		{
-			var repo = new QuoteRepository();
+			var repo = new QuoteRepository(_context);
 
 			return repo.GetRandom();
 		}

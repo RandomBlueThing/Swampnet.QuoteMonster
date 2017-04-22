@@ -8,38 +8,51 @@ namespace QuoteMonster.Model
 {
     public class QuoteRepository
     {
-		private readonly Random _rnd = new Random();
+		private readonly QuoteContext _context;
 
-		private static readonly Quote[] _mocked = new Quote[] {
-			new Quote(){Id = 1, Text = "Quote 1"},
-			new Quote(){Id = 2, Text = "Quote 2"},
-			new Quote(){Id = 3, Text = "Quote 3"},
-			new Quote(){Id = 4, Text = "Quote 4"},
-			new Quote(){Id = 5, Text = "Quote 5"},
-			new Quote(){Id = 6, Text = "Quote 6"},
-			new Quote(){Id = 7, Text = "Quote 7"},
-			new Quote(){Id = 8, Text = "Quote 8"},
-			new Quote(){Id = 9, Text = "Quote 9"},
-			new Quote(){Id = 10, Text = "Quote 10"},
-		};
+		public QuoteRepository(QuoteContext context)
+		{
+			_context = context;
+		}
+
 
 		public Quote Search(int id)
 		{
-			return _mocked.Single(x => x.Id == id);
+			return _context.Quotes.Single(q => q.Id == id);
 		}
-
 
 
 		public IEnumerable<Quote> Search()
 		{
-			Thread.Sleep(1000);
-
-			return _mocked;
+			return _context.Quotes.ToArray();
 		}
 
-		internal Quote GetRandom()
+
+		public Quote GetRandom()
 		{
-			return _mocked[_rnd.Next(0, _mocked.Length - 1)];
+			return _context.Quotes.OrderBy(q => Guid.NewGuid()).First();
+		}
+
+
+		public Quote Save(Quote quote)
+		{
+			// Insert
+			if(quote.Id == 0)
+			{
+				quote.CreatedOn = DateTime.UtcNow;
+				_context.Add(quote);
+			}
+
+			// Update
+			else
+			{
+				quote.ModifiedOn = DateTime.UtcNow;
+				_context.Update(quote);
+			}
+
+			_context.SaveChanges();
+
+			return quote;
 		}
 	}
 }

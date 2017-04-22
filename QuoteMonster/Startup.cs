@@ -47,6 +47,9 @@ namespace QuoteMonster
 			services.AddDbContext<PropertyContext>(options =>
 				options.UseSqlServer(
 					Configuration.GetConnectionString("dbmain")));
+			services.AddDbContext<QuoteContext>(options =>
+				options.UseSqlServer(
+					Configuration.GetConnectionString("dbmain")));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -45,6 +45,20 @@ export class QuoteService {
 			headers: authHeader
 		});
 	}
+
+	save(quote: Quote) {
+		console.log('quoteService.save: ' + quote.id);
+		var jwt = localStorage.getItem('id_token');
+		var authHeader = new Headers();
+		authHeader.append('Content-Type', 'application/json');
+		if (jwt) {
+			authHeader.append('Authorization', 'Bearer ' + jwt);
+		}
+
+		return this.http.post('/api/Save',
+			JSON.stringify(quote),
+			{ headers: authHeader });
+	}
 }
 
 export interface Quote {
