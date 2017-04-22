@@ -1,0 +1,18 @@
+﻿<h1>Search</h1>
+
+<p *ngIf="!data"><em>Loading...</em></p>
+
+<table class='table' *ngIf="data">
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Text</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let quote of data">
+			<td>{{ quote.id }}</td>
+			<td>{{ quote.text }}</td>
+		</tr>
+	</tbody>
+</table>

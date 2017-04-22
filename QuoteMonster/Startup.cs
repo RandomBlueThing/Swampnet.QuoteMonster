@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using QuoteMonster.Model;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace QuoteMonster
 {

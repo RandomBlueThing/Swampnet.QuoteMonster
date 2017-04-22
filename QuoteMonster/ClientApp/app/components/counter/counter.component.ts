@@ -1,25 +1,11 @@
 import { Component } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { HelloService } from '../helloworld.service';
 
 @Component({
     selector: 'counter',
-	templateUrl: './counter.component.html',
-	providers: [HelloService]
+	templateUrl: './counter.component.html'
 })
-export class CounterComponent implements OnInit {
+export class CounterComponent {
 	public currentCount = 0;
-	public greeting = '';
-
-	constructor(private helloService: HelloService) { }
-
-	ngOnInit(): void {
-		this.helloService.getGreetingSlowly()
-			.then(g => this.greeting = g);
-
-		this.helloService.getGreeting()
-			.then(g => this.greeting = g);
-	}
 
     public incrementCounter() {
         this.currentCount++;

@@ -7,6 +7,9 @@ using Microsoft.Extensions.Configuration;
 using QuoteMonster.Model;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace QuoteMonster.Controllers
 {
@@ -31,6 +34,15 @@ namespace QuoteMonster.Controllers
 		[HttpGet("[action]")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
+			// Various claim related r&d
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);    // auth0|58d2dd5dea3bc32c8afcae90
+			var name_claim = User.FindFirstValue(ClaimTypes.Name);			// null
+			var surname_claim = User.FindFirstValue(ClaimTypes.Surname);    // null
+			var email_claim = User.FindFirstValue(ClaimTypes.Email);        // null
+			var x = User.Identity.Name;										// null
+			var y = User.Identity.AuthenticationType;						// AuthenticationTypes.Federation
+			var claims = User.Claims;
+
 			var properties = _context.Properties.ToArray();
 			var rng = new Random();
 
