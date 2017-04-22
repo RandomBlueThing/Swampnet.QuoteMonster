@@ -5,8 +5,6 @@ import { UniversalModule } from 'angular2-universal';
 import { AppComponent } from './components/app/app.component'
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
-import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
-import { CounterComponent } from './components/counter/counter.component';
 import { SearchComponent } from './components/search/search.component';
 import { EditQuoteComponent } from './components/search/edit-quote.component';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
@@ -16,8 +14,6 @@ import { AUTH_PROVIDERS } from 'angular2-jwt';
     declarations: [
         AppComponent,
         NavMenuComponent,
-        CounterComponent,
-        FetchDataComponent,
 		HomeComponent,
 		SearchComponent,
 		EditQuoteComponent
@@ -31,8 +27,6 @@ import { AUTH_PROVIDERS } from 'angular2-jwt';
             { path: 'home', component: HomeComponent },
 			{ path: 'search', component: SearchComponent },
 			{ path: 'edit/:id', component: EditQuoteComponent },
-            { path: 'counter', component: CounterComponent },
-            { path: 'fetch-data', component: FetchDataComponent },
             { path: '**', redirectTo: 'home' }
         ])
 	]
