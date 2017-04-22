@@ -8,6 +8,8 @@ namespace QuoteMonster.Model
 {
     public class QuoteRepository
     {
+		private readonly Random _rnd = new Random();
+
 		private static readonly Quote[] _mocked = new Quote[] {
 			new Quote(){Id = 1, Text = "Quote 1"},
 			new Quote(){Id = 2, Text = "Quote 2"},
@@ -21,7 +23,11 @@ namespace QuoteMonster.Model
 			new Quote(){Id = 10, Text = "Quote 10"},
 		};
 
-		private readonly Random _rnd = new Random();
+		public Quote Search(int id)
+		{
+			return _mocked.Single(x => x.Id == id);
+		}
+
 
 
 		public IEnumerable<Quote> Search()

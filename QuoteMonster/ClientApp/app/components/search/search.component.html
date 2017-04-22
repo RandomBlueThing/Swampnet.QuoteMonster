@@ -10,7 +10,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let quote of data">
+		<tr *ngFor="let quote of data" [routerLink]="['/edit', quote.id]">
 			<td>{{ quote.id }}</td>
 			<td>{{ quote.text }}</td>
 		</tr>

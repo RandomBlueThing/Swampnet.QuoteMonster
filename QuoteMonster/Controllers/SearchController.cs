@@ -13,7 +13,7 @@ namespace QuoteMonster.Controllers
     public class SearchController : Controller
     {
 
-		[Authorize]
+		//[Authorize]
 		[HttpGet]
 		[Route("api/Search")]
 		public IEnumerable<Quote> Get()
@@ -21,6 +21,16 @@ namespace QuoteMonster.Controllers
 			var repo = new QuoteRepository();
 
 			return repo.Search();
+		}
+
+		//[Authorize]
+		[HttpGet]
+		[Route("api/Search/{id?}")]
+		public Quote Get(int id)
+		{
+			var repo = new QuoteRepository();
+
+			return repo.Search(id);
 		}
 
 

@@ -10,7 +10,6 @@ export class QuoteService {
 
 
 	getRandomQuote() {
-
 		var jwt = localStorage.getItem('id_token');
 		var authHeader = new Headers();
 		if (jwt) {
@@ -21,6 +20,18 @@ export class QuoteService {
 			headers: authHeader
 		});
 
+	}
+
+	getQuote(id: number) {
+		var jwt = localStorage.getItem('id_token');
+		var authHeader = new Headers();
+		if (jwt) {
+			authHeader.append('Authorization', 'Bearer ' + jwt);
+		}
+
+		return this.http.get('/api/Search/' + id, {
+			headers: authHeader
+		});
 	}
 
 	search() {
