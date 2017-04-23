@@ -36,7 +36,9 @@ namespace QuoteMonster.Controllers
 		{
 			var repo = new QuoteRepository(_context);
 
-			return repo.Search(id);
+			return id == 0 
+				? new Quote()
+				: repo.Search(id);
 		}
 
 
