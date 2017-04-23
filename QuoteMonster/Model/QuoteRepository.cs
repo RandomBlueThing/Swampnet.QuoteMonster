@@ -34,12 +34,13 @@ namespace QuoteMonster.Model
 		}
 
 
-		public Quote Save(Quote quote)
+		public Quote Save(Quote quote, User user)
 		{
 			// Insert
 			if(quote.Id == 0)
 			{
 				quote.CreatedOn = DateTime.UtcNow;
+				quote.CreatedBy = user.Id;
 				_context.Add(quote);
 			}
 
@@ -47,6 +48,7 @@ namespace QuoteMonster.Model
 			else
 			{
 				quote.ModifiedOn = DateTime.UtcNow;
+				quote.ModifiedBy = user.Id;
 				_context.Update(quote);
 			}
 

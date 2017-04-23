@@ -12,6 +12,7 @@ using QuoteMonster.Model;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using QuoteMonster.Services;
 
 namespace QuoteMonster
 {
@@ -40,16 +41,19 @@ namespace QuoteMonster
         {
 			// Add global cfg.
 			services.AddSingleton<IConfigurationRoot>(Configuration);
+			services.AddScoped<IUserManagementService, UserManagementService>();
+			
+			services.AddDbContext<PropertyContext>(options =>
+				options.UseSqlServer(
+					Configuration.GetConnectionString("dbmain")));
+
+			services.AddDbContext<QuoteContext>(options =>
+				options.UseSqlServer(
+					Configuration.GetConnectionString("dbmain")));
 
 			// Add framework services.
 			services.AddMvc();
 			services.AddCors();
-			services.AddDbContext<PropertyContext>(options =>
-				options.UseSqlServer(
-					Configuration.GetConnectionString("dbmain")));
-			services.AddDbContext<QuoteContext>(options =>
-				options.UseSqlServer(
-					Configuration.GetConnectionString("dbmain")));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

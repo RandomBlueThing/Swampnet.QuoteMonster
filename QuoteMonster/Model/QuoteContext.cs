@@ -19,10 +19,14 @@ namespace QuoteMonster.Model
 			modelBuilder.Entity<Quote>()
 				.ToTable("Quote");
 
+			modelBuilder.Entity<User>()
+				.ToTable("User");
+
 			base.OnModelCreating(modelBuilder);
 		}
 
 
 		public DbSet<Quote> Quotes { get; set; }
+		public DbSet<User> Users { get; set; }
 	}
 }
