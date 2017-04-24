@@ -1,10 +1,6 @@
 ﻿<div *ngIf="quote">
 	<h2>{{quote.text}}</h2>
 	<div>
-		<label>id: </label>{{quote.id}}
-	</div>
-	<div>
-		<label>text: </label>
 		<textarea [(ngModel)]="quote.text"></textarea>
 	</div>
 	<button (click)="goBack()">Back</button>

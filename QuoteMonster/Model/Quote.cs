@@ -10,8 +10,12 @@ namespace QuoteMonster.Model
 		public int Id { get; set; }
 		public string Text { get; set; }
 		public DateTime CreatedOn { get; set; }
-		public DateTime? ModifiedOn { get; set; }
-		public Guid CreatedBy { get; set; }
-		public Guid? ModifiedBy { get; set; }
+		public Guid CreatedByUserId { get; set; }
+		public User CreatedBy { get; set; }
+
+		#region QuoteViewModel really..
+		// Jeez, good name there pj.
+		public bool IsOneOfUsers { get; set; }
+		#endregion
 	}
 }

@@ -6,6 +6,7 @@ import { EditQuoteComponent } from './edit-quote.component';
 @Component({
 	selector: 'search',
 	templateUrl: './search.component.html',
+	styleUrls: ['./search.component.css'],
 	providers: [QuoteService]
 })
 export class SearchComponent {

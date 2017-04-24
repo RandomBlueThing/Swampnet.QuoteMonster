@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using QuoteMonster.Services;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace QuoteMonster
 {
@@ -52,7 +54,11 @@ namespace QuoteMonster
 					Configuration.GetConnectionString("dbmain")));
 
 			// Add framework services.
-			services.AddMvc();
+			services.AddMvc().AddJsonOptions(options => {
+				options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+				options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+			});
+
 			services.AddCors();
 		}
 

@@ -5,14 +5,15 @@
 <table class='table' *ngIf="data">
 	<thead>
 		<tr>
-			<th>Id</th>
 			<th>Text</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let quote of data" [routerLink]="['/edit', quote.id]">
-			<td>{{ quote.id }}</td>
+		<tr *ngFor="let quote of data">
 			<td>{{ quote.text }}</td>
+			<td class="edit" [routerLink]="['/edit', quote.id]" *ngIf="quote.isOneOfUsers">Edit</td>
+			<td *ngIf="!quote.isOneOfUsers"></td>
 		</tr>
 	</tbody>
 </table>

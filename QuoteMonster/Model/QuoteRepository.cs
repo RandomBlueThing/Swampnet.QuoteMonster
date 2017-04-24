@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace QuoteMonster.Model
 {
@@ -22,9 +23,14 @@ namespace QuoteMonster.Model
 		}
 
 
-		public IEnumerable<Quote> Search()
+		public IEnumerable<Quote> Search(User user)
 		{
-			return _context.Quotes.ToArray();
+			var quotes = _context.Quotes.Include(q => q.CreatedBy).OrderByDescending(q => q.CreatedOn).ToArray();
+			foreach(var q in quotes)
+			{
+				q.IsOneOfUsers = q.CreatedByUserId == user.Id;
+			}
+			return quotes;
 		}
 
 
@@ -40,15 +46,13 @@ namespace QuoteMonster.Model
 			if(quote.Id == 0)
 			{
 				quote.CreatedOn = DateTime.UtcNow;
-				quote.CreatedBy = user.Id;
+				quote.CreatedByUserId = user.Id;
 				_context.Add(quote);
 			}
 
 			// Update
 			else
 			{
-				quote.ModifiedOn = DateTime.UtcNow;
-				quote.ModifiedBy = user.Id;
 				_context.Update(quote);
 			}
 

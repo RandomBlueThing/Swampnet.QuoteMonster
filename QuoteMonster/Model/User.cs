@@ -11,5 +11,7 @@ namespace QuoteMonster.Model
 		public string Lookup { get; set; }
 		public DateTime CreatedOn { get; set; }
 		public bool IsActive { get; set; }
+
+		public List<Quote> Quotes { get; set; }
 	}
 }

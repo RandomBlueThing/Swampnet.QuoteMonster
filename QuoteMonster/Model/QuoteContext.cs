@@ -19,6 +19,14 @@ namespace QuoteMonster.Model
 			modelBuilder.Entity<Quote>()
 				.ToTable("Quote");
 
+			modelBuilder.Entity<Quote>()
+				.HasOne(q => q.CreatedBy)
+				.WithMany(u => u.Quotes)
+				.HasForeignKey(q => q.CreatedByUserId);
+
+			modelBuilder.Entity<Quote>()
+				.Ignore(q => q.IsOneOfUsers);
+
 			modelBuilder.Entity<User>()
 				.ToTable("User");
 
