@@ -7,6 +7,7 @@ import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { SearchComponent } from './components/search/search.component';
 import { EditQuoteComponent } from './components/search/edit-quote.component';
+import { EditProfileComponent } from './components/profile/edit-profile.component';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 
 @NgModule({
@@ -16,7 +17,8 @@ import { AUTH_PROVIDERS } from 'angular2-jwt';
         NavMenuComponent,
 		HomeComponent,
 		SearchComponent,
-		EditQuoteComponent
+		EditQuoteComponent,
+		EditProfileComponent
 	],
 	providers: [AUTH_PROVIDERS],
     imports: [
@@ -27,6 +29,7 @@ import { AUTH_PROVIDERS } from 'angular2-jwt';
             { path: 'home', component: HomeComponent },
 			{ path: 'search', component: SearchComponent },
 			{ path: 'edit/:id', component: EditQuoteComponent },
+			{ path: 'profile', component: EditProfileComponent },
             { path: '**', redirectTo: 'home' }
         ])
 	]

@@ -7,21 +7,23 @@ using QuoteMonster.Services;
 
 namespace QuoteMonster.Controllers
 {
-	[Produces("application/json")]
-    public class SearchController : Controller
+    [Produces("application/json")]
+    [Route("api/Quotes")]
+    public class QuotesController : Controller
     {
 		private readonly QuoteContext _context;
 		private readonly IUserManagementService _userManagement;
 
-		public SearchController(IUserManagementService userManagement, QuoteContext context)
+		public QuotesController(IUserManagementService userManagement, QuoteContext context)
 		{
 			_context = context;
 			_userManagement = userManagement;
 		}
 
+
 		[Authorize]
 		[HttpGet]
-		[Route("api/Search")]
+		[Route("/api/Quotes")]
 		public IEnumerable<Quote> Get()
 		{
 			var user = _userManagement.FindOrCreate(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -44,14 +46,14 @@ namespace QuoteMonster.Controllers
 
 		[Authorize]
 		[HttpGet]
-		[Route("api/Search/{id?}")]
+		[Route("/api/Quotes/{id}")]
 		public Quote Get(int id)
 		{
 			var user = _userManagement.FindOrCreate(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
 			var repo = new QuoteRepository(_context);
 
-			return id == 0 
+			return id == 0
 				? new Quote()
 				: repo.Search(id);
 		}
@@ -59,8 +61,7 @@ namespace QuoteMonster.Controllers
 
 		[Authorize]
 		[HttpPost]
-		[Route("api/Save")]
-		public Quote Post([FromBody] Quote quote)
+		public Quote Save([FromBody] Quote quote)
 		{
 			var user = _userManagement.FindOrCreate(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
@@ -73,7 +74,7 @@ namespace QuoteMonster.Controllers
 
 
 		[HttpGet]
-		[Route("api/RandomQuote")]
+		[Route("/api/Quotes/Random")]
 		public Quote GetRandom()
 		{
 			var repo = new QuoteRepository(_context);

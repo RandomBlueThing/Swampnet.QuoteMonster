@@ -7,6 +7,7 @@ import 'rxjs/add/operator/switchMap';
 @Component({
 	selector: 'edit-quote',
 	templateUrl: './edit-quote.component.html',
+	styleUrls: ['./edit-quote.component.css'],
 	providers: [QuoteService]
 })
 export class EditQuoteComponent implements OnInit {

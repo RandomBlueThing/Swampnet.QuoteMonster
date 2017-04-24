@@ -16,7 +16,7 @@ export class QuoteService {
 			authHeader.append('Authorization', 'Bearer ' + jwt);
 		}
 
-		return this.http.get('/api/RandomQuote', {
+		return this.http.get('/api/Quotes/Random', {
 			headers: authHeader
 		});
 
@@ -29,7 +29,7 @@ export class QuoteService {
 			authHeader.append('Authorization', 'Bearer ' + jwt);
 		}
 
-		return this.http.get('/api/Search/' + id, {
+		return this.http.get('/api/Quotes/' + id, {
 			headers: authHeader
 		});
 	}
@@ -41,7 +41,7 @@ export class QuoteService {
 			authHeader.append('Authorization', 'Bearer ' + jwt);
 		}
 
-		return this.http.get('/api/Search', {
+		return this.http.get('/api/Quotes', {
 			headers: authHeader
 		});
 	}
@@ -55,7 +55,7 @@ export class QuoteService {
 			authHeader.append('Authorization', 'Bearer ' + jwt);
 		}
 
-		return this.http.post('/api/Save',
+		return this.http.post('/api/Quotes',
 			JSON.stringify(quote),
 			{ headers: authHeader });
 	}
