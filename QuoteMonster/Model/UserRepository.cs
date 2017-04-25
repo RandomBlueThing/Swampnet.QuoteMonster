@@ -26,7 +26,8 @@ namespace QuoteMonster.Model
 				Id = Guid.NewGuid(),
 				Lookup = lookup,
 				CreatedOn = DateTime.UtcNow,
-				IsActive = true
+				IsActive = true,
+				IsNew = true
 			};
 
 			_context.Add(user);

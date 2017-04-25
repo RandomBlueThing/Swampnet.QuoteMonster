@@ -25,24 +25,14 @@
                 </li>
 				<li [routerLinkActive]="['link-active']" *ngIf="auth.authenticated()">
 					<a [routerLink]="['/search']">
-						<span class='glyphicon glyphicon-home'></span> Search
+						<span class='glyphicon glyphicon-search'></span> Search
 					</a>
 				</li>
 				<li [routerLinkActive]="['link-active']" *ngIf="auth.authenticated()">
 					<a [routerLink]="['/profile']">
-						<span class='glyphicon glyphicon-home'></span> Profile
+						<span class='glyphicon glyphicon-user'></span> Profile
 					</a>
 				</li>
-                <!--<li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/counter']">
-                        <span class='glyphicon glyphicon-education'></span> Counter
-                    </a>
-                </li>
-                <li [routerLinkActive]="['link-active']" *ngIf="auth.authenticated()">
-                    <a [routerLink]="['/fetch-data']">
-                        <span class='glyphicon glyphicon-th-list'></span> Fetch data
-                    </a>
-                </li>-->
             </ul>
         </div>
     </div>

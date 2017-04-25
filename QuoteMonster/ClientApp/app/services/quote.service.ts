@@ -59,6 +59,56 @@ export class QuoteService {
 			JSON.stringify(quote),
 			{ headers: authHeader });
 	}
+
+	// This profile stuff doesn't belong in here!
+	onLogin(access_token: string) {
+		var jwt = localStorage.getItem('id_token');
+		var authHeader = new Headers();
+		if (jwt) {
+			authHeader.append('Authorization', 'Bearer ' + jwt);
+		}
+
+		return this.http.get('/api/Users/OnLogin?access_token=' + access_token, {
+			headers: authHeader
+		});	
+	}
+
+	loadProfile() {
+		var jwt = localStorage.getItem('id_token');
+		var authHeader = new Headers();
+		if (jwt) {
+			authHeader.append('Authorization', 'Bearer ' + jwt);
+		}
+
+		return this.http.get('/api/Users/GetCurrent', {
+			headers: authHeader
+		});	
+	}
+
+
+	saveProfile(profile: Profile) {
+		console.log('quoteService.saveProfile: ' + profile.id);
+		var jwt = localStorage.getItem('id_token');
+		var authHeader = new Headers();
+		authHeader.append('Content-Type', 'application/json');
+		if (jwt) {
+			authHeader.append('Authorization', 'Bearer ' + jwt);
+		}
+
+		return this.http.put('/api/Users/' + profile.id,
+			JSON.stringify(profile),
+			{ headers: authHeader });
+	}
+}
+
+
+export interface Profile {
+	id: string;
+	displayName: string;
+	email: string;
+	isNew: boolean;
+	isActive: boolean;
+	avatarUrl: string;
 }
 
 export interface Quote {

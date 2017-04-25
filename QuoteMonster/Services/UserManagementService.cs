@@ -8,7 +8,7 @@ namespace QuoteMonster.Services
 {
 	public interface IUserManagementService
 	{
-		User FindOrCreate(string lookup);
+		User Find(string lookup);
 	}
 
 
@@ -22,17 +22,10 @@ namespace QuoteMonster.Services
 		}
 
 
-		public User FindOrCreate(string lookup)
+		public User Find(string lookup)
 		{
 			var repo = new UserRepository(_context);
-			var user = repo.Search(lookup);
-			if(user == null)
-			{
-				user = repo.CreateNewUser(lookup);
-
-				_context.SaveChanges();
-			}
-			return user;
+			return repo.Search(lookup);
 		}
 	}
 }

@@ -30,6 +30,8 @@ namespace QuoteMonster.Model
 			modelBuilder.Entity<User>()
 				.ToTable("User");
 
+			modelBuilder.Entity<User>().Ignore(u => u.IsNew);
+
 			base.OnModelCreating(modelBuilder);
 		}
 

@@ -9,6 +9,7 @@ import { SearchComponent } from './components/search/search.component';
 import { EditQuoteComponent } from './components/search/edit-quote.component';
 import { EditProfileComponent } from './components/profile/edit-profile.component';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
+import { QuoteService } from './services/quote.service';
 
 @NgModule({
     bootstrap: [ AppComponent ],
@@ -20,7 +21,9 @@ import { AUTH_PROVIDERS } from 'angular2-jwt';
 		EditQuoteComponent,
 		EditProfileComponent
 	],
-	providers: [AUTH_PROVIDERS],
+	providers: [
+		AUTH_PROVIDERS,
+		QuoteService],
     imports: [
 		UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
 		FormsModule,

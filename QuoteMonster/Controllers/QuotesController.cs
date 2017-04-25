@@ -26,7 +26,7 @@ namespace QuoteMonster.Controllers
 		[Route("/api/Quotes")]
 		public IEnumerable<Quote> Get()
 		{
-			var user = _userManagement.FindOrCreate(User.FindFirstValue(ClaimTypes.NameIdentifier));
+			var user = _userManagement.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
 			// Various claim related r&d
 			//var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);    // auth0|58d2dd5dea3bc32c8afcae90
@@ -49,7 +49,7 @@ namespace QuoteMonster.Controllers
 		[Route("/api/Quotes/{id}")]
 		public Quote Get(int id)
 		{
-			var user = _userManagement.FindOrCreate(User.FindFirstValue(ClaimTypes.NameIdentifier));
+			var user = _userManagement.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
 			var repo = new QuoteRepository(_context);
 
@@ -63,7 +63,7 @@ namespace QuoteMonster.Controllers
 		[HttpPost]
 		public Quote Save([FromBody] Quote quote)
 		{
-			var user = _userManagement.FindOrCreate(User.FindFirstValue(ClaimTypes.NameIdentifier));
+			var user = _userManagement.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
 			// @TODO: If we're updating an existing Quote, we should make sure it was actually created by this user (which probably means
 			//		  reloading it 'cos we shouldn't trust the data being passed to us!)

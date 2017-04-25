@@ -1,5 +1,26 @@
 ﻿<div>
+	<div *ngIf="profile">
+		<h1>{{profile.displayName}}</h1>
+		<div>
+			<span>
+				Name
+				<input [(ngModel)]="profile.displayName" />
+			</span>
+		</div>
 
+		<div>
+			<span>
+				Email
+				<input [(ngModel)]="profile.email" />
+			</span>
+		</div>
+
+		<div *ngIf="profile.avatarUrl">
+			<img src="{{profile.avatarUrl}}"/>
+		</div>
+
+	</div>
+	<hr/>
 	<button (click)="goBack()">Back</button>
 	<button (click)="save()">Save</button>
 </div>

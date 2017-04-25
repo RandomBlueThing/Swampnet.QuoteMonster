@@ -25,6 +25,7 @@ export class EditQuoteComponent implements OnInit {
 		this.route.params
 			.switchMap((params: Params) => this.quoteService.getQuote(+params['id']))
 			.subscribe(result => {
+				console.log(result.json());
 				this.quote = result.json() as Quote;
 			});
 	}
