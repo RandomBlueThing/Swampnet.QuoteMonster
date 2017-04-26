@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { tokenNotExpired } from 'angular2-jwt';
 import { Router } from '@angular/router';
-import { QuoteService, Profile } from './quote.service';
+import { Http, Headers } from '@angular/http';
 
 // Avoid name not found warnings
 declare var Auth0Lock: any;
@@ -13,12 +13,13 @@ export class Auth {
 
 	constructor(
 		private router: Router,
-		private quoteService: QuoteService) {
+		private http: Http
+		) {
 		// Add callback for lock `authenticated` event
 		this.lock.on('authenticated', (authResult) => {
 			localStorage.setItem('id_token', authResult.idToken);
 
-			this.quoteService.onLogin(authResult.accessToken).subscribe(result => {
+			this.onLogin(authResult.accessToken).subscribe(result => {
 				// @TODO: Check result and potentialy navigate to /profile (or even log us out!)
 				var profile = result.json() as Profile;
 
@@ -52,4 +53,54 @@ export class Auth {
 		localStorage.removeItem('id_token');
 		this.router.navigate(['/home']);
 	};
+
+
+	onLogin(access_token: string) {
+		var jwt = localStorage.getItem('id_token');
+		var authHeader = new Headers();
+		if (jwt) {
+			authHeader.append('Authorization', 'Bearer ' + jwt);
+		}
+
+		return this.http.get('/api/Users/OnLogin?access_token=' + access_token, {
+			headers: authHeader
+		});
+	}
+
+	loadProfile() {
+		var jwt = localStorage.getItem('id_token');
+		var authHeader = new Headers();
+		if (jwt) {
+			authHeader.append('Authorization', 'Bearer ' + jwt);
+		}
+
+		return this.http.get('/api/Users/GetCurrent', {
+			headers: authHeader
+		});
+	}
+
+
+	saveProfile(profile: Profile) {
+		console.log('quoteService.saveProfile: ' + profile.id);
+		var jwt = localStorage.getItem('id_token');
+		var authHeader = new Headers();
+		authHeader.append('Content-Type', 'application/json');
+		if (jwt) {
+			authHeader.append('Authorization', 'Bearer ' + jwt);
+		}
+
+		return this.http.put('/api/Users/' + profile.id,
+			JSON.stringify(profile),
+			{ headers: authHeader });
+	}
+
+}
+
+export interface Profile {
+	id: string;
+	displayName: string;
+	email: string;
+	isNew: boolean;
+	isActive: boolean;
+	avatarUrl: string;
 }

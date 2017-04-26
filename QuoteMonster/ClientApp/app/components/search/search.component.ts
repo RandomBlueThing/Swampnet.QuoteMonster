@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Quote, QuoteService } from '../../services/quote.service'
 import { EditQuoteComponent } from './edit-quote.component';
@@ -6,22 +6,29 @@ import { EditQuoteComponent } from './edit-quote.component';
 @Component({
 	selector: 'search',
 	templateUrl: './search.component.html',
-	styleUrls: ['./search.component.css']/*,
-	providers: [QuoteService]*/
+	styleUrls: ['./search.component.css']
 })
 export class SearchComponent {
 
 	public data: Quote[];
 
+	@Input() text: string;
+	@Input() author: string;
+
 	constructor(
 		private quoteService: QuoteService,
 		private router: Router) {
+		this.text = '';
+		this.author = '';
+		this.search();
+	}
 
-		this.quoteService.search()
-				.subscribe(result => {
-					this.data = result.json() as Quote[];
-					console.log(result.json());
-				});
+	search() {
+		this.quoteService.search(this.text, this.author)
+			.subscribe(result => {
+				this.data = result.json() as Quote[];
+				console.log(result.json());
+			});
 	}
 
 	newQuote() {

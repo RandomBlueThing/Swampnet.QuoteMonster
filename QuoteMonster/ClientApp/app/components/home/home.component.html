@@ -1,7 +1,11 @@
 <h1>Quote Monster</h1>
 
-<h3 (click)="refreshQuote()" *ngIf="quote">{{quote.text}}</h3>
+<div *ngIf="quote" class="quote" (click)="refreshQuote()">
+	<h3>{{quote.text}}</h3>
+	<p>{{quote.author.name}}</p>
+</div>
 
+<hr/>
 <p>Built with:</p>
 <ul>
     <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>

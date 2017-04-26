@@ -4,6 +4,7 @@ import { Quote, QuoteService } from '../../services/quote.service'
 @Component({
     selector: 'home',
     templateUrl: './home.component.html',
+	styleUrls: ['./home.component.css'],
 	providers: [QuoteService]
 })
 export class HomeComponent implements OnInit  {
@@ -24,6 +25,4 @@ export class HomeComponent implements OnInit  {
 				this.quote = result.json() as Quote;
 			});		
 	}
-
-
 }

@@ -20,6 +20,7 @@ namespace QuoteMonster.Model
 		public bool IsNew { get; set; }
 		#endregion
 
+		[Newtonsoft.Json.JsonIgnore]
 		public List<Quote> Quotes { get; set; }
 	}
 }

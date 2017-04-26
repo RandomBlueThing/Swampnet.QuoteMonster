@@ -19,24 +19,46 @@ namespace QuoteMonster.Model
 
 		public Quote Search(int id)
 		{
-			return _context.Quotes.Single(q => q.Id == id);
+			return _context.Quotes
+				.Include(q => q.CreatedBy)
+				.Include(q => q.Author)
+				.Single(q => q.Id == id);
 		}
 
 
-		public IEnumerable<Quote> Search(User user)
+		public IEnumerable<Quote> Search(User user, string text, string author)
 		{
-			var quotes = _context.Quotes.Include(q => q.CreatedBy).OrderByDescending(q => q.CreatedOn).ToArray();
-			foreach(var q in quotes)
+			IEnumerable<Quote> quotes = _context.Quotes
+				.Include(q => q.CreatedBy)
+				.Include(q => q.Author)
+				;
+			
+			if (!string.IsNullOrEmpty(text))
 			{
-				q.IsOneOfUsers = q.CreatedByUserId == user.Id;
+				quotes = quotes.Where(q => q.Text.Contains(text));
 			}
-			return quotes;
+
+			if (!string.IsNullOrEmpty(author))
+			{
+				quotes = quotes.Where(q => q.Author.Name.Contains(author));
+			}
+
+			var result = quotes.OrderByDescending(q => q.CreatedOn).ToArray();
+
+			if (user != null)
+			{
+				foreach (var q in result)
+				{
+					q.CanEdit = q.CreatedByUserId == user.Id;
+				}
+			}
+			return result;
 		}
 
 
 		public Quote GetRandom()
 		{
-			return _context.Quotes.OrderBy(q => Guid.NewGuid()).First();
+			return _context.Quotes.Include(q => q.Author).OrderBy(q => Guid.NewGuid()).First();
 		}
 
 
@@ -55,8 +77,6 @@ namespace QuoteMonster.Model
 			{
 				_context.Update(quote);
 			}
-
-			_context.SaveChanges();
 
 			return quote;
 		}

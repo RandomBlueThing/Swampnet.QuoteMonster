@@ -2,7 +2,7 @@
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import 'rxjs/add/operator/switchMap';
-import { QuoteService, Profile } from '../../services/quote.service';
+import { Auth, Profile } from '../../services/auth.service';
 
 @Component({
 	selector: 'edit-profile',
@@ -16,13 +16,13 @@ export class EditProfileComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private location: Location,
-		private quoteService: QuoteService
+		private auth: Auth
 	) {
 	}
 
 
 	ngOnInit(): void {
-		this.quoteService.loadProfile()
+		this.auth.loadProfile()
 			.subscribe(result => {
 				console.log(result.json());
 				this.profile = result.json() as Profile;
@@ -31,7 +31,7 @@ export class EditProfileComponent implements OnInit {
 
 
 	save(): void {
-		this.quoteService.saveProfile(this.profile).subscribe(result => {
+		this.auth.saveProfile(this.profile).subscribe(result => {
 			this.goBack();
 		});
 	}

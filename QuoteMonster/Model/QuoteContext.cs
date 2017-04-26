@@ -25,12 +25,15 @@ namespace QuoteMonster.Model
 				.HasForeignKey(q => q.CreatedByUserId);
 
 			modelBuilder.Entity<Quote>()
-				.Ignore(q => q.IsOneOfUsers);
+				.Ignore(q => q.CanEdit);
 
 			modelBuilder.Entity<User>()
 				.ToTable("User");
 
 			modelBuilder.Entity<User>().Ignore(u => u.IsNew);
+
+			modelBuilder.Entity<Author>()
+				.ToTable("Author");
 
 			base.OnModelCreating(modelBuilder);
 		}
@@ -38,5 +41,6 @@ namespace QuoteMonster.Model
 
 		public DbSet<Quote> Quotes { get; set; }
 		public DbSet<User> Users { get; set; }
+		public DbSet<Author> Authors { get; set; }
 	}
 }

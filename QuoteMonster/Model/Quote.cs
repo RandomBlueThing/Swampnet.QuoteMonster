@@ -12,10 +12,11 @@ namespace QuoteMonster.Model
 		public DateTime CreatedOn { get; set; }
 		public Guid CreatedByUserId { get; set; }
 		public User CreatedBy { get; set; }
+		public int AuthorId { get; set; }
+		public Author Author { get; set; }
 
 		#region QuoteViewModel really..
-		// Jeez, good name there pj.
-		public bool IsOneOfUsers { get; set; }
+		public bool CanEdit { get; set; }
 		#endregion
 	}
 }

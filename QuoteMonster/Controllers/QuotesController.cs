@@ -21,10 +21,9 @@ namespace QuoteMonster.Controllers
 		}
 
 
-		[Authorize]
 		[HttpGet]
 		[Route("/api/Quotes")]
-		public IEnumerable<Quote> Get()
+		public IEnumerable<Quote> Get([FromQuery] string text, [FromQuery] string author)
 		{
 			var user = _userManagement.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
@@ -41,7 +40,7 @@ namespace QuoteMonster.Controllers
 
 			var repo = new QuoteRepository(_context);
 
-			return repo.Search(user);
+			return repo.Search(user, text, author);
 		}
 
 		[Authorize]
@@ -71,7 +70,13 @@ namespace QuoteMonster.Controllers
 
 			var repo = new QuoteRepository(_context);
 
+			// Fudge Author
+			quote.Author = null;
+			quote.AuthorId = 1;
+
 			repo.Save(quote, user);
+
+			_context.SaveChanges();
 
 			return quote;
 		}
