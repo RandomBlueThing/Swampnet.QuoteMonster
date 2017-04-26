@@ -4,8 +4,7 @@ import { Quote, QuoteService } from '../../services/quote.service'
 @Component({
     selector: 'home',
     templateUrl: './home.component.html',
-	styleUrls: ['./home.component.css'],
-	providers: [QuoteService]
+	styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit  {
 
