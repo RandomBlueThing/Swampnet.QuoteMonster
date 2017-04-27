@@ -24,9 +24,6 @@ namespace QuoteMonster.Model
 				.WithMany(u => u.Quotes)
 				.HasForeignKey(q => q.CreatedByUserId);
 
-			modelBuilder.Entity<Quote>()
-				.Ignore(q => q.CanEdit);
-
 			modelBuilder.Entity<User>()
 				.ToTable("User");
 

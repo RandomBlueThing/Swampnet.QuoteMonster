@@ -71,5 +71,5 @@ export interface Quote {
 	id: number;
 	text: string;
 	canEdit: boolean;
-	author: Author;
+	author: string;
 }

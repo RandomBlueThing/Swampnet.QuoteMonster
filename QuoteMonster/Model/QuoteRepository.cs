@@ -45,13 +45,6 @@ namespace QuoteMonster.Model
 
 			var result = quotes.OrderByDescending(q => q.CreatedOn).ToArray();
 
-			if (user != null)
-			{
-				foreach (var q in result)
-				{
-					q.CanEdit = q.CreatedByUserId == user.Id;
-				}
-			}
 			return result;
 		}
 
@@ -61,24 +54,21 @@ namespace QuoteMonster.Model
 			return _context.Quotes.Include(q => q.Author).OrderBy(q => Guid.NewGuid()).First();
 		}
 
-
-		public Quote Save(Quote quote, User user)
+		public Quote CreateQuote(User user)
 		{
-			// Insert
-			if(quote.Id == 0)
+			var quote = new Quote()
 			{
-				quote.CreatedOn = DateTime.UtcNow;
-				quote.CreatedByUserId = user.Id;
-				_context.Add(quote);
-			}
+				CreatedByUserId = user.Id,
+				CreatedOn = DateTime.UtcNow
+			};
 
-			// Update
-			else
-			{
-				_context.Update(quote);
-			}
-
+			_context.Quotes.Add(quote);
 			return quote;
+		}
+
+		internal Author FindAuthor(string author)
+		{
+			return _context.Authors.SingleOrDefault(a => a.Name == author);
 		}
 	}
 }

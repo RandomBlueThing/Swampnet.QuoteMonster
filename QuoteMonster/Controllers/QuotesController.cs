@@ -1,9 +1,12 @@
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using QuoteMonster.Model;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using QuoteMonster.Services;
+using QuoteMonster.ViewModels;
+using System;
 
 namespace QuoteMonster.Controllers
 {
@@ -23,7 +26,7 @@ namespace QuoteMonster.Controllers
 
 		[HttpGet]
 		[Route("/api/Quotes")]
-		public IEnumerable<Quote> Get([FromQuery] string text, [FromQuery] string author)
+		public IEnumerable<QuoteViewModel> Get([FromQuery] string text, [FromQuery] string author)
 		{
 			var user = _userManagement.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
@@ -39,28 +42,29 @@ namespace QuoteMonster.Controllers
 
 
 			var repo = new QuoteRepository(_context);
+			var quotes = repo.Search(user, text, author);
 
-			return repo.Search(user, text, author);
+			return quotes.Select(q => q.ToViewModel(user));
 		}
 
 		[Authorize]
 		[HttpGet]
 		[Route("/api/Quotes/{id}")]
-		public Quote Get(int id)
+		public QuoteViewModel Get(int id)
 		{
 			var user = _userManagement.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
 			var repo = new QuoteRepository(_context);
 
 			return id == 0
-				? new Quote()
-				: repo.Search(id);
+				? new QuoteViewModel()
+				: repo.Search(id).ToViewModel(user);
 		}
 
 
 		[Authorize]
 		[HttpPost]
-		public Quote Save([FromBody] Quote quote)
+		public QuoteViewModel Save([FromBody] QuoteViewModel quote)
 		{
 			var user = _userManagement.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
@@ -69,12 +73,44 @@ namespace QuoteMonster.Controllers
 			//	- isn't there an anti-tamper thing we can do or is that MVC only?
 
 			var repo = new QuoteRepository(_context);
+			Quote q;
 
-			// Fudge Author
-			quote.Author = null;
-			quote.AuthorId = 1;
+			// New Quote
+			if(quote.Id == 0)
+			{
+				q = repo.CreateQuote(user);
+			}
+			// Update existing
+			else
+			{
+				q = repo.Search(quote.Id);
+				if(q == null)
+				{
+					// return 404?
+				}
+				else
+				{
+					if(q.CreatedByUserId != user.Id)
+					{
+						// Not created by this user??
+					}
+				}
+			}
 
-			repo.Save(quote, user);
+			q.Text = quote.Text;
+
+			// Check if Author has changed
+			if (q.Author == null || q.Author.Name != quote.Author)
+			{
+				q.Author = repo.FindAuthor(quote.Author);
+				if(q.Author == null)
+				{
+					q.Author = new Author()
+					{
+						Name = quote.Author,
+					};
+				}
+			}
 
 			_context.SaveChanges();
 
@@ -84,11 +120,11 @@ namespace QuoteMonster.Controllers
 
 		[HttpGet]
 		[Route("/api/Quotes/Random")]
-		public Quote GetRandom()
+		public QuoteViewModel GetRandom()
 		{
 			var repo = new QuoteRepository(_context);
 
-			return repo.GetRandom();
+			return repo.GetRandom().ToViewModel();
 		}
 	}
 }

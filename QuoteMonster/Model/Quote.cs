@@ -14,9 +14,5 @@ namespace QuoteMonster.Model
 		public User CreatedBy { get; set; }
 		public int AuthorId { get; set; }
 		public Author Author { get; set; }
-
-		#region QuoteViewModel really..
-		public bool CanEdit { get; set; }
-		#endregion
 	}
 }
