@@ -2,16 +2,8 @@
 	<h2>{{quote.text}}</h2>
 	<div>
 		<textarea [(ngModel)]="quote.text"></textarea>
-		<input [(ngModel)]="quote.author"/>
+		<input no-match-found-text="Create new" auto-complete [(ngModel)]="quote.author" [source]="authors" />
 	</div>
-	<button (click)="goBack()">Back</button>
-	<button (click)="save()">Save</button>
-
-	<hr />
-
-	<div *ngIf="authors">
-		<ul>
-			<li *ngFor="let author of authors">{{author}}</li>
-		</ul>
-	</div>
+	<button type="button" class="btn" (click)="goBack()">Back</button>
+	<button type="button" class="btn btn-primary" (click)="save()">Save</button>
 </div>

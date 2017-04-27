@@ -12,6 +12,7 @@ import { AboutComponent } from './components/about/about.component';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { QuoteService } from './services/quote.service';
 import { AuthService } from './services/auth.service';
+import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 
 @NgModule({
     bootstrap: [ AppComponent ],
@@ -32,6 +33,7 @@ import { AuthService } from './services/auth.service';
     imports: [
 		UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
 		FormsModule,
+		NguiAutoCompleteModule,
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },

@@ -2,10 +2,31 @@
 
 <p *ngIf="!data"><em>Loading...</em></p>
 
-Text <input [(ngModel)]="text"/>
-Author <input [(ngModel)]="author" />
+<div class="container">
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-1">
+			Text
+		</div>
+		<div class="col-md-9">
+			<input [(ngModel)]="text" />
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-1">
+			Author
+		</div>
+		<div class="col-md-9">
+			<input no-match-found-text="Unknown" auto-complete [(ngModel)]="author" [source]="authors" />
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+</div>
 
-<button (click)="search()">Search</button>
+<button type="button" class="btn btn-primary" (click)="search()">Search</button>
+
 
 <table class='table' *ngIf="data">
 	<thead>
@@ -22,4 +43,4 @@ Author <input [(ngModel)]="author" />
 		</tr>
 	</tbody>
 </table>
-<button (click)="newQuote()" *ngIf="auth.authenticated()">New</button>
+<button type="button" class="btn btn-primary" (click)="newQuote()" *ngIf="auth.authenticated()">New</button>

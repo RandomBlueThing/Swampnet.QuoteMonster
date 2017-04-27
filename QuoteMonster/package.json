@@ -15,6 +15,7 @@
     "@angular/platform-server": "^2.4.5",
     "@angular/router": "^3.4.5",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.23",
+    "@ngui/auto-complete": "^0.13.2",
     "@types/node": "^6.0.42",
     "angular2-jwt": "^0.2.2",
     "angular2-platform-node": "~2.0.11",
