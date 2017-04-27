@@ -2,7 +2,7 @@
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import 'rxjs/add/operator/switchMap';
-import { Auth, Profile } from '../../services/auth.service';
+import { AuthService, Profile } from '../../services/auth.service';
 
 @Component({
 	selector: 'edit-profile',
@@ -16,7 +16,7 @@ export class EditProfileComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private location: Location,
-		private auth: Auth
+		private auth: AuthService
 	) {
 	}
 

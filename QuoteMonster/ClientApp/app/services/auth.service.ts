@@ -7,7 +7,7 @@ import { Http, Headers } from '@angular/http';
 declare var Auth0Lock: any;
 
 @Injectable()
-export class Auth {
+export class AuthService {
 	// Configure Auth0
 	lock = new Auth0Lock('qICeCpL8xVCEjTHv1CYhZpRUM7csAGIy', 'swampnet.eu.auth0.com', {});
 

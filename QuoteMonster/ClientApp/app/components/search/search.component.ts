@@ -1,6 +1,7 @@
 ﻿import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Quote, QuoteService } from '../../services/quote.service'
+import { AuthService } from '../../services/auth.service'
 import { EditQuoteComponent } from './edit-quote.component';
 
 @Component({
@@ -17,6 +18,7 @@ export class SearchComponent {
 
 	constructor(
 		private quoteService: QuoteService,
+		private auth: AuthService,
 		private router: Router) {
 		this.text = '';
 		this.author = '';

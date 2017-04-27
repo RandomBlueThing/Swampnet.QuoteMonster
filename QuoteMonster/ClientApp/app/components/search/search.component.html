@@ -22,4 +22,4 @@ Author <input [(ngModel)]="author" />
 		</tr>
 	</tbody>
 </table>
-<button (click)="newQuote()">New</button>
+<button (click)="newQuote()" *ngIf="auth.authenticated()">New</button>
