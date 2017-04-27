@@ -47,6 +47,15 @@ namespace QuoteMonster.Controllers
 			return quotes.Select(q => q.ToViewModel(user));
 		}
 
+		[HttpGet]
+		[Route("/api/Authors")]
+		public IEnumerable<string> GetAuthors()
+		{
+			return new QuoteRepository(_context)
+				.AllAuthors()
+				.ToArray();
+		}
+
 		[Authorize]
 		[HttpGet]
 		[Route("/api/Quotes/{id}")]

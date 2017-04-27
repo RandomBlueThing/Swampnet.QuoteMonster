@@ -70,5 +70,11 @@ namespace QuoteMonster.Model
 		{
 			return _context.Authors.SingleOrDefault(a => a.Name == author);
 		}
+
+
+		internal IEnumerable<string> AllAuthors()
+		{
+			return _context.Authors.Select(a => a.Name);
+		}
 	}
 }

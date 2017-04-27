@@ -34,6 +34,18 @@ export class QuoteService {
 		});
 	}
 
+	getAuthors() {
+		var jwt = localStorage.getItem('id_token');
+		var authHeader = new Headers();
+		if (jwt) {
+			authHeader.append('Authorization', 'Bearer ' + jwt);
+		}
+
+		return this.http.get('/api/Authors', {
+			headers: authHeader
+		});
+	}
+
 	search(text: string, author: string) {
 		var jwt = localStorage.getItem('id_token');
 		var authHeader = new Headers();

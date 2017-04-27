@@ -12,6 +12,7 @@ import 'rxjs/add/operator/switchMap';
 export class EditQuoteComponent implements OnInit {
 
 	@Input() quote: Quote;
+	public authors: string[];
 
 	constructor(
 		private quoteService: QuoteService,
@@ -24,9 +25,11 @@ export class EditQuoteComponent implements OnInit {
 		this.route.params
 			.switchMap((params: Params) => this.quoteService.getQuote(+params['id']))
 			.subscribe(result => {
-				console.log(result.json());
 				this.quote = result.json() as Quote;
 			});
+
+		this.quoteService.getAuthors()
+			.subscribe(result => this.authors = result.json() as string[]);
 	}
 
 

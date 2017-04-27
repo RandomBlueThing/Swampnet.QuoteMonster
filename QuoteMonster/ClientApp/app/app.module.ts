@@ -8,6 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { SearchComponent } from './components/search/search.component';
 import { EditQuoteComponent } from './components/search/edit-quote.component';
 import { EditProfileComponent } from './components/profile/edit-profile.component';
+import { AboutComponent } from './components/about/about.component';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { QuoteService } from './services/quote.service';
 import { AuthService } from './services/auth.service';
@@ -20,7 +21,8 @@ import { AuthService } from './services/auth.service';
 		HomeComponent,
 		SearchComponent,
 		EditQuoteComponent,
-		EditProfileComponent
+		EditProfileComponent,
+		AboutComponent
 	],
 	providers: [
 		AUTH_PROVIDERS,
