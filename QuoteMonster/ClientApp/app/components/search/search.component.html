@@ -1,4 +1,4 @@
-﻿<h1>Search</h1>
+﻿<h1><span class="glyphicon glyphicon-search"></span> Search</h1>
 
 <p *ngIf="!data"><em>Loading...</em></p>
 
@@ -28,7 +28,18 @@
 <button type="button" class="btn btn-primary" (click)="search()">Search</button>
 
 <div class="container" *ngIf="data">
-	<table class='table'>
+	<div *ngFor="let quote of data">
+		<blockquote>
+			<p>
+				{{quote.text}}
+				<span class="edit glyphicon glyphicon-pencil" [routerLink]="['/edit', quote.id]" *ngIf="quote.canEdit"></span>
+			</p>
+			<footer>{{quote.author}}</footer>
+		</blockquote>
+		
+	</div>
+
+	<!--<table class='table'>
 		<thead>
 			<tr>
 				<th>Text</th>
@@ -42,7 +53,7 @@
 				<td *ngIf="!quote.isOneOfUsers"></td>
 			</tr>
 		</tbody>
-	</table>
+	</table>-->
 
 	<button type="button" class="btn btn-primary" (click)="newQuote()" *ngIf="auth.authenticated()">New</button>
 

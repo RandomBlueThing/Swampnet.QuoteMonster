@@ -1,8 +1,10 @@
 <h1>Quote Monster</h1>
 
 <div *ngIf="quote" class="quote" (click)="refreshQuote()">
-	<h3>{{quote.text}}</h3>
-	<p>{{quote.author}}</p>
+	<blockquote>
+		<p>{{quote.text}}</p>
+		<footer>{{quote.author}}</footer>
+	</blockquote>
 </div>
 
 <hr/>
