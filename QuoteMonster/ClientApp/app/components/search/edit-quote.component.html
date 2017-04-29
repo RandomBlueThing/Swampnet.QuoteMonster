@@ -1,9 +1,15 @@
 ﻿<div *ngIf="quote">
-	<h2>{{quote.text}}</h2>
-	<div>
-		<textarea [(ngModel)]="quote.text"></textarea>
-		<input no-match-found-text="Create new" auto-complete [(ngModel)]="quote.author" [source]="authors" />
+	<div class=" container">
+		<div class="panel panel-default">
+			<div class="panel-heading">Edit Quote</div>
+			<div class="panel-body">
+				<textarea [(ngModel)]="quote.text"></textarea>
+				<input no-match-found-text="Create new" auto-complete [(ngModel)]="quote.author" [source]="authors" />
+			</div>
+			<div class="panel-footer">
+				<button type="button" class="btn" (click)="goBack()">Back</button>
+				<button type="button" class="btn btn-primary" (click)="save()">Save</button>
+			</div>
+		</div>
 	</div>
-	<button type="button" class="btn" (click)="goBack()">Back</button>
-	<button type="button" class="btn btn-primary" (click)="save()">Save</button>
 </div>

@@ -27,20 +27,23 @@
 
 <button type="button" class="btn btn-primary" (click)="search()">Search</button>
 
+<div class="container" *ngIf="data">
+	<table class='table'>
+		<thead>
+			<tr>
+				<th>Text</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let quote of data">
+				<td>{{ quote.text }}</td>
+				<td class="edit" [routerLink]="['/edit', quote.id]" *ngIf="quote.canEdit">Edit</td>
+				<td *ngIf="!quote.isOneOfUsers"></td>
+			</tr>
+		</tbody>
+	</table>
 
-<table class='table' *ngIf="data">
-	<thead>
-		<tr>
-			<th>Text</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let quote of data">
-			<td>{{ quote.text }}</td>
-			<td class="edit" [routerLink]="['/edit', quote.id]" *ngIf="quote.canEdit">Edit</td>
-			<td *ngIf="!quote.isOneOfUsers"></td>
-		</tr>
-	</tbody>
-</table>
-<button type="button" class="btn btn-primary" (click)="newQuote()" *ngIf="auth.authenticated()">New</button>
+	<button type="button" class="btn btn-primary" (click)="newQuote()" *ngIf="auth.authenticated()">New</button>
+
+</div>
