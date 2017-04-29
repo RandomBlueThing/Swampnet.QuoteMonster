@@ -30,6 +30,9 @@
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
     <Content Remove="ClientApp\**" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientApp\app\images\quote-mark-large.png" />
+  </ItemGroup>
 
 	<ItemGroup>
 		<DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0-msbuild3-final" />
