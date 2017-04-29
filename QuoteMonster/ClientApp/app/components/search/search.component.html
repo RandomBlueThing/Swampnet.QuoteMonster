@@ -1,7 +1,4 @@
-﻿<p *ngIf="!data"><em>Loading...</em></p>
-
-
-<div class="container search">
+﻿<div class="container search">
 	<div class="row">
 		<div class="col-md-2">
 			Text
@@ -21,14 +18,14 @@
 	<div class="row">
 		<div class="col-md-10"></div>
 		<div class="col-md-2">
-			<button type="button" class="btn btn-primary" (click)="search()">Search</button>
+			<button [disabled]="busy" type="button" class="btn btn-primary" (click)="search()">Search</button>
 		</div>
 	</div>
 </div>
 
+<p *ngIf="!data"><em>Loading...</em></p>
 
-
-<div class="results container panel-group" *ngIf="data">
+<div *ngIf="data" class="results container panel-group">
 	<div class="panel panel-default" *ngFor="let quote of data">
 		<div class="row">
 			<div class="col-md-1"></div>
@@ -44,4 +41,13 @@
 	</div>
 </div>
 
-<button type="button" class="btn btn-primary" (click)="newQuote()" *ngIf="auth.authenticated()">New</button>
+<span>
+	<button [disabled]="busy" type="button" class="btn" (click)="previousPage()">Prev</button>
+	<button [disabled]="busy" type="button" class="btn" (click)="nextPage()">Next</button>
+</span>
+
+<div>
+	<button [disabled]="busy" type="button" class="btn btn-primary" (click)="newQuote()" *ngIf="auth.authenticated()">New</button>
+</div>
+
+<div>page: {{page}} busy: {{busy}}</div>
