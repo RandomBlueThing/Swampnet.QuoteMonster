@@ -1,10 +1,6 @@
-<h1>Quote Monster</h1>
-
-<div *ngIf="quote" class="quote" (click)="refreshQuote()">
-	<h3>{{quote.text}}</h3>
-	<p>{{quote.author}}</p>
+<div *ngIf="quote" class="quote jumbotron" (click)="refreshQuote()">
+	<h2>{{quote.text}}</h2>
+	<em>{{quote.author}}</em>
 </div>
-
-<hr/>
 
 <about></about>

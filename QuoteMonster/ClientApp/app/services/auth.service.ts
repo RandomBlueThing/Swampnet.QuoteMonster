@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { tokenNotExpired } from 'angular2-jwt';
 import { Router } from '@angular/router';
-import { Http, Headers } from '@angular/http';
+import { AuthenticatedHttp } from './authenticated-http.service';
 
 // Avoid name not found warnings
 declare var Auth0Lock: any;
@@ -13,14 +13,13 @@ export class AuthService {
 
 	constructor(
 		private router: Router,
-		private http: Http
+		private http: AuthenticatedHttp
 		) {
 		// Add callback for lock `authenticated` event
 		this.lock.on('authenticated', (authResult) => {
 			localStorage.setItem('id_token', authResult.idToken);
 
 			this.onLogin(authResult.accessToken).subscribe(result => {
-				// @TODO: Check result and potentialy navigate to /profile (or even log us out!)
 				var profile = result.json() as Profile;
 
 				if (!profile.isActive) {
@@ -56,42 +55,17 @@ export class AuthService {
 
 
 	onLogin(access_token: string) {
-		var jwt = localStorage.getItem('id_token');
-		var authHeader = new Headers();
-		if (jwt) {
-			authHeader.append('Authorization', 'Bearer ' + jwt);
-		}
-
-		return this.http.get('/api/Users/OnLogin?access_token=' + access_token, {
-			headers: authHeader
-		});
+		return this.http.get('/api/Users/OnLogin?access_token=' + access_token);
 	}
 
 	loadProfile() {
-		var jwt = localStorage.getItem('id_token');
-		var authHeader = new Headers();
-		if (jwt) {
-			authHeader.append('Authorization', 'Bearer ' + jwt);
-		}
-
-		return this.http.get('/api/Users/GetCurrent', {
-			headers: authHeader
-		});
+		return this.http.get('/api/Users/GetCurrent');
 	}
 
 
 	saveProfile(profile: Profile) {
-		console.log('quoteService.saveProfile: ' + profile.id);
-		var jwt = localStorage.getItem('id_token');
-		var authHeader = new Headers();
-		authHeader.append('Content-Type', 'application/json');
-		if (jwt) {
-			authHeader.append('Authorization', 'Bearer ' + jwt);
-		}
-
 		return this.http.put('/api/Users/' + profile.id,
-			JSON.stringify(profile),
-			{ headers: authHeader });
+			JSON.stringify(profile));
 	}
 
 }

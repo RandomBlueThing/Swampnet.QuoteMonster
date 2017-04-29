@@ -1,75 +1,35 @@
 ﻿import { Injectable } from '@angular/core';
+import { AuthenticatedHttp } from '../services/authenticated-http.service'
 import { Http, Headers } from '@angular/http';
 
 @Injectable()
 export class QuoteService {
 
 	constructor(
-		private http: Http
+		private http: AuthenticatedHttp
 	) {	}
 
 
 	getRandomQuote() {
-		var jwt = localStorage.getItem('id_token');
-		var authHeader = new Headers();
-		if (jwt) {
-			authHeader.append('Authorization', 'Bearer ' + jwt);
-		}
-
-		return this.http.get('/api/Quotes/Random', {
-			headers: authHeader
-		});
-
+		return this.http.get('/api/Quotes/Random');
 	}
 
 	getQuote(id: number) {
-		var jwt = localStorage.getItem('id_token');
-		var authHeader = new Headers();
-		if (jwt) {
-			authHeader.append('Authorization', 'Bearer ' + jwt);
-		}
-
-		return this.http.get('/api/Quotes/' + id, {
-			headers: authHeader
-		});
+		return this.http.get('/api/Quotes/' + id);
 	}
 
 	getAuthors() {
-		var jwt = localStorage.getItem('id_token');
-		var authHeader = new Headers();
-		if (jwt) {
-			authHeader.append('Authorization', 'Bearer ' + jwt);
-		}
-
-		return this.http.get('/api/Authors', {
-			headers: authHeader
-		});
+		return this.http.get('/api/Authors');
 	}
 
 	search(text: string, author: string) {
-		var jwt = localStorage.getItem('id_token');
-		var authHeader = new Headers();
-		if (jwt) {
-			authHeader.append('Authorization', 'Bearer ' + jwt);
-		}
-
-		return this.http.get('/api/Quotes?text=' + text + '&author=' + author, {
-			headers: authHeader
-		});
+		return this.http.get('/api/Quotes?text=' + text + '&author=' + author);
 	}
 
 	save(quote: Quote) {
-		console.log('quoteService.save: ' + quote.id);
-		var jwt = localStorage.getItem('id_token');
-		var authHeader = new Headers();
-		authHeader.append('Content-Type', 'application/json');
-		if (jwt) {
-			authHeader.append('Authorization', 'Bearer ' + jwt);
-		}
-
-		return this.http.post('/api/Quotes',
-			JSON.stringify(quote),
-			{ headers: authHeader });
+		return this.http.post(
+			'/api/Quotes',
+			JSON.stringify(quote));
 	}
 
 }

@@ -1,3 +1,6 @@
 ﻿.quote {
 	cursor: pointer;
+	background-image: url("../../images/quote-mark-large.png");
+	background-repeat: no-repeat;
+	background-size: contain;
 }

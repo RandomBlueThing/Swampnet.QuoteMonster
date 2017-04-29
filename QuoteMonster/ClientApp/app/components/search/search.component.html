@@ -1,46 +1,47 @@
-﻿<h1>Search</h1>
+﻿<p *ngIf="!data"><em>Loading...</em></p>
 
-<p *ngIf="!data"><em>Loading...</em></p>
 
-<div class="container">
+<div class="container search">
 	<div class="row">
-		<div class="col-md-2"></div>
-		<div class="col-md-1">
+		<div class="col-md-2">
 			Text
 		</div>
-		<div class="col-md-9">
+		<div class="col-md-10">
 			<input [(ngModel)]="text" />
 		</div>
-		<div class="col-md-2"></div>
 	</div>
 	<div class="row">
-		<div class="col-md-2"></div>
-		<div class="col-md-1">
+		<div class="col-md-2">
 			Author
 		</div>
-		<div class="col-md-9">
+		<div class="col-md-10">
 			<input no-match-found-text="Unknown" auto-complete [(ngModel)]="author" [source]="authors" />
 		</div>
-		<div class="col-md-2"></div>
+	</div>
+	<div class="row">
+		<div class="col-md-10"></div>
+		<div class="col-md-2">
+			<button type="button" class="btn btn-primary" (click)="search()">Search</button>
+		</div>
 	</div>
 </div>
 
-<button type="button" class="btn btn-primary" (click)="search()">Search</button>
 
 
-<table class='table' *ngIf="data">
-	<thead>
-		<tr>
-			<th>Text</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let quote of data">
-			<td>{{ quote.text }}</td>
-			<td class="edit" [routerLink]="['/edit', quote.id]" *ngIf="quote.canEdit">Edit</td>
-			<td *ngIf="!quote.isOneOfUsers"></td>
-		</tr>
-	</tbody>
-</table>
+<div class="results container panel-group" *ngIf="data">
+	<div class="panel panel-default" *ngFor="let quote of data">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-9">
+				<p>{{quote.text}}</p>
+				<em> - {{quote.author}}</em>
+			</div>
+			<div class="col-md-1">
+				<span class="edit glyphicon glyphicon-pencil" [routerLink]="['/edit', quote.id]" *ngIf="quote.canEdit"></span>
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+	</div>
+</div>
+
 <button type="button" class="btn btn-primary" (click)="newQuote()" *ngIf="auth.authenticated()">New</button>
