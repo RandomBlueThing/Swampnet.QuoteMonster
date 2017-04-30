@@ -11,6 +11,7 @@ export class QuoteService {
 
 
 	getRandomQuote() {
+		console.log("getRandomQuote");
 		return this.http.get('/api/Quotes/Random');
 	}
 
@@ -22,8 +23,8 @@ export class QuoteService {
 		return this.http.get('/api/Authors');
 	}
 
-	search(text: string, author: string) {
-		return this.http.get('/api/Quotes?text=' + text + '&author=' + author);
+	search(text: string, author: string, page: number, pageSize: number) {
+		return this.http.get('/api/Quotes?text=' + text + '&author=' + author + '&page=' + page + '&pageSize=' + pageSize);
 	}
 
 	save(quote: Quote) {

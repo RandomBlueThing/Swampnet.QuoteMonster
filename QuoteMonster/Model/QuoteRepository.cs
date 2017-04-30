@@ -26,7 +26,7 @@ namespace QuoteMonster.Model
 		}
 
 
-		public IEnumerable<Quote> Search(User user, string text, string author)
+		public IEnumerable<Quote> Search(User user, string text, string author, int? page, int? pageSize)
 		{
 			IEnumerable<Quote> quotes = _context.Quotes
 				.Include(q => q.CreatedBy)
@@ -41,6 +41,11 @@ namespace QuoteMonster.Model
 			if (!string.IsNullOrEmpty(author))
 			{
 				quotes = quotes.Where(q => q.Author.Name.Contains(author));
+			}
+
+			if(page.HasValue && pageSize.HasValue)
+			{
+				quotes = quotes.Skip(page.Value * pageSize.Value).Take(pageSize.Value);
 			}
 
 			var result = quotes.OrderByDescending(q => q.CreatedOn).ToArray();

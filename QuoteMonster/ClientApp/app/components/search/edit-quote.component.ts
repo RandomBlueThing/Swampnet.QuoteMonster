@@ -13,6 +13,7 @@ export class EditQuoteComponent implements OnInit {
 
 	@Input() quote: Quote;
 	public authors: string[];
+	public busy: boolean;
 
 	constructor(
 		private quoteService: QuoteService,
@@ -22,10 +23,12 @@ export class EditQuoteComponent implements OnInit {
 
 
 	ngOnInit(): void {
+		this.busy = true;
 		this.route.params
 			.switchMap((params: Params) => this.quoteService.getQuote(+params['id']))
 			.subscribe(result => {
 				this.quote = result.json() as Quote;
+				this.busy = false;
 			});
 
 		this.quoteService.getAuthors()
@@ -34,7 +37,9 @@ export class EditQuoteComponent implements OnInit {
 
 
 	save(): void {
+		this.busy = true;
 		this.quoteService.save(this.quote).subscribe(result => {
+			this.busy = false;
 			this.goBack();
 		});
 		

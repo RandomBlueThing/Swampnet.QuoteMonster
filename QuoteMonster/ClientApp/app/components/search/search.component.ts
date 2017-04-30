@@ -13,6 +13,9 @@ export class SearchComponent implements OnInit {
 
 	public data: Quote[];
 	public authors: string[];
+	private page: number;
+	private pageSize: number;
+	private busy: boolean;
 
 	@Input() text: string;
 	@Input() author: string;
@@ -33,15 +36,35 @@ export class SearchComponent implements OnInit {
 
 
 	search() {
-		this.quoteService.search(this.text, this.author)
+		this.page = 0;
+		this.pageSize = 10;
+		this.refresh();
+	}
+
+	private refresh() {
+		this.busy = true;
+		this.quoteService.search(this.text, this.author, this.page, this.pageSize)
 			.subscribe(result => {
 				this.data = result.json() as Quote[];
-				console.log(result.json());
+				this.busy = false;
 			});
 	}
 
+
 	newQuote() {
 		this.router.navigate(['/edit', 0]);
+	}
+
+	nextPage() {
+		this.page++;
+		this.refresh();
+	}
+
+	previousPage() {
+		if (this.page > 0) {
+			this.page--;
+			this.refresh();
+		}
 	}
 }
 

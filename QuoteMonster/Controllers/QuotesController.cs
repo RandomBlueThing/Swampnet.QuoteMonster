@@ -26,7 +26,7 @@ namespace QuoteMonster.Controllers
 
 		[HttpGet]
 		[Route("/api/Quotes")]
-		public IEnumerable<QuoteViewModel> Get([FromQuery] string text, [FromQuery] string author)
+		public IEnumerable<QuoteViewModel> Get([FromQuery] string text, [FromQuery] string author, [FromQuery] int? page, [FromQuery] int? pageSize)
 		{
 			var user = _userManagement.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
@@ -42,7 +42,7 @@ namespace QuoteMonster.Controllers
 
 
 			var repo = new QuoteRepository(_context);
-			var quotes = repo.Search(user, text, author);
+			var quotes = repo.Search(user, text, author, page, pageSize);
 
 			return quotes.Select(q => q.ToViewModel(user));
 		}
