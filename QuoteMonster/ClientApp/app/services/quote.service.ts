@@ -11,6 +11,7 @@ export class QuoteService {
 
 
 	getRandomQuote() {
+		console.log("getRandomQuote");
 		return this.http.get('/api/Quotes/Random');
 	}
 

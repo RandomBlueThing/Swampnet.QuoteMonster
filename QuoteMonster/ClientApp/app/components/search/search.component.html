@@ -25,18 +25,14 @@
 
 <p *ngIf="!data"><em>Loading...</em></p>
 
-<div *ngIf="data" class="results container panel-group">
-	<div class="panel panel-default" *ngFor="let quote of data">
-		<div class="row">
-			<div class="col-md-1"></div>
-			<div class="col-md-9">
-				<p>{{quote.text}}</p>
-				<em> - {{quote.author}}</em>
-			</div>
-			<div class="col-md-1">
-				<span class="edit glyphicon glyphicon-pencil" [routerLink]="['/edit', quote.id]" *ngIf="quote.canEdit"></span>
-			</div>
-			<div class="col-md-1"></div>
+<div *ngIf="data" class="results container">
+	<div class="result row" *ngFor="let quote of data">
+		<div class="col-md-11">
+			<h4>{{quote.text}}</h4>
+			<em> - {{quote.author}}</em>
+		</div>
+		<div class="col-md-1">
+			<span class="edit glyphicon glyphicon-pencil" [routerLink]="['/edit', quote.id]" *ngIf="quote.canEdit"></span>
 		</div>
 	</div>
 </div>
