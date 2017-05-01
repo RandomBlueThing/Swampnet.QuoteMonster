@@ -11,28 +11,37 @@ export class AuthService {
 	// Configure Auth0
 	lock = new Auth0Lock('qICeCpL8xVCEjTHv1CYhZpRUM7csAGIy', 'swampnet.eu.auth0.com', {});
 
+	public profile: Profile;
+
 	constructor(
 		private router: Router,
 		private http: AuthenticatedHttp
 		) {
+
 		// Add callback for lock `authenticated` event
 		this.lock.on('authenticated', (authResult) => {
 			localStorage.setItem('id_token', authResult.idToken);
 
 			this.onLogin(authResult.accessToken).subscribe(result => {
-				var profile = result.json() as Profile;
+				this.profile = result.json() as Profile;
 
-				if (!profile.isActive) {
+				if (!this.profile.isActive) {
 					console.log("user is inactive - logging out.")
 					this.logout();
 				}
 
-				if (profile.isNew) {
+				if (this.profile.isNew) {
 					console.log("user is new - redirecting to profile.")
 					this.router.navigate(['/profile']);
 				}
 			});
 		});
+
+		if (this.authenticated()) {
+			this.loadProfile().subscribe(result => {
+				this.profile = result.json() as Profile;
+			});
+		}
 	}
 
 	public login() {
@@ -59,11 +68,13 @@ export class AuthService {
 	}
 
 	loadProfile() {
+		console.log("Loading profile");
 		return this.http.get('/api/Users/GetCurrent');
 	}
 
 
 	saveProfile(profile: Profile) {
+		this.profile = profile;
 		return this.http.put('/api/Users/' + profile.id,
 			JSON.stringify(profile));
 	}
