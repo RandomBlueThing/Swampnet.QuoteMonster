@@ -1,6 +1,8 @@
 <div *ngIf="quote" class="quote jumbotron" (click)="refreshQuote()">
-	<h2>{{quote.text}}</h2>
-	<em>{{quote.author}}</em>
+	<div>
+		<h2>{{quote.text}}</h2>
+		<em>{{quote.author}}</em>
+	</div>
 </div>
 
 <about></about>
