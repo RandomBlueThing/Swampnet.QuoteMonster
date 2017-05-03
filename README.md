@@ -1,29 +1,12 @@
 # Swampnet.QuoteMonster
 
-- Create empty solution
-- In solution root:
+## Dumb playaround app, built with:
 
-> \>dotnet new angular -n QuoteMonster
-
-- Add QuoteMonster.csproj to solution.
-- F5!
-
-Adding user secrets:
-https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets
-
----
-
-Auth0
-
-npm install --save angular-jwt
-
-Index.cshtml
-	Get rid of the  asp-prerender-module stuff on app
-	<script src="https://cdn.auth0.com/js/lock/10.14/lock.min.js"></script>
-
-Add auth.service service & inject anywhere we need a reference to it.
-
-*Note, I got a Auth0Lock not defined errors all over the place if I tried to npm install it. Referencing the cdn seems to solve this, but I don't know why.
-
-See: https://auth0.com/docs/quickstart/spa/angular2
-
+* [ASP.NET Core](https://get.asp.net/) and [c#](https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx) for cross-platform server-side code.
+* [Angular 2](https://angular.io/) and [TypeScript](http://www.typescriptlang.org/) for client side code.
+* [Webpack](https://webpack.github.io/) for building and bundling client resources.
+* [Bootstrap](http://getbootstrap.com/) for layout and styling.
+* [Auth0](https://auth0.com/) for authentication.
+* [Azure](https://azure.microsoft.com/) + [Sql Server](https://www.microsoft.com/en-gb/sql-server/sql-server-2016/) for hosting and data.
+* [Entity Framework Core](https://github.com/aspnet/EntityFramework/) for cross-platform data access.
+* [GitHub](https://github.com/RandomBlueThing/Swampnet.QuoteMonster) for source code repositories.
