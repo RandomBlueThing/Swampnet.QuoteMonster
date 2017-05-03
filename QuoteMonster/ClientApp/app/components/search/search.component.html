@@ -1,24 +1,27 @@
 ﻿<div class="container search">
 	<div class="row">
+		<div class="col-md-2"></div>
 		<div class="col-md-2">
 			Text
 		</div>
-		<div class="col-md-10">
+		<div class="col-md-8">
 			<input [(ngModel)]="text" />
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-2">
-			Author
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-2">
+				Author
+			</div>
+			<div class="col-md-8">
+				<input no-match-found-text="Unknown" auto-complete [(ngModel)]="author" [source]="authors" />
+			</div>
 		</div>
-		<div class="col-md-10">
-			<input no-match-found-text="Unknown" auto-complete [(ngModel)]="author" [source]="authors" />
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-10"></div>
-		<div class="col-md-2">
-			<button [disabled]="busy" type="button" class="btn btn-primary" (click)="search()">Search</button>
+		<div class="row">
+			<div class="col-md-8"></div>
+			<div class="col-md-2">
+				<button [disabled]="busy" type="button" class="btn btn-primary" (click)="search()">Search</button>
+			</div>
+			<div class="col-md-2"></div>
 		</div>
 	</div>
 </div>

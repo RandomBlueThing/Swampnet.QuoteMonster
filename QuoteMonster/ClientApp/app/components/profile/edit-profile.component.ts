@@ -11,7 +11,7 @@ import { AuthService, Profile } from '../../services/auth.service';
 export class EditProfileComponent implements OnInit {
 
 	@Input() profile: Profile;
-
+	public busy: boolean;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -22,16 +22,20 @@ export class EditProfileComponent implements OnInit {
 
 
 	ngOnInit(): void {
+		this.busy = true;
 		this.auth.loadProfile()
 			.subscribe(result => {
 				console.log(result.json());
 				this.profile = result.json() as Profile;
+				this.busy = false;
 			});
 	}
 
 
 	save(): void {
+		this.busy = true;
 		this.auth.saveProfile(this.profile).subscribe(result => {
+			this.busy = false;
 			this.goBack();
 		});
 	}

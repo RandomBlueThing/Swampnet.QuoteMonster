@@ -48,7 +48,7 @@ namespace QuoteMonster.Model
 				quotes = quotes.Skip(page.Value * pageSize.Value).Take(pageSize.Value);
 			}
 
-			var result = quotes.OrderByDescending(q => q.CreatedOn).ToArray();
+			var result = quotes.OrderBy(q => q.Text).ToArray();
 
 			return result;
 		}

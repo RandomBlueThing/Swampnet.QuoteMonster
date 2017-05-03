@@ -1,26 +1,28 @@
-﻿<div>
-	<div *ngIf="profile">
-		<h1>{{profile.displayName}}</h1>
-		<div>
-			<span>
-				Name
-				<input [(ngModel)]="profile.displayName" />
-			</span>
+﻿<div class="container" *ngIf="profile">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3>Edit Profile</h3>
 		</div>
-
-		<div>
-			<span>
-				Email
-				<input [(ngModel)]="profile.email" />
-			</span>
+		<div class="panel-body">
+			<form #f="ngForm" (ngSubmit)="save()">
+				<p>
+					<label>Name</label>
+					<input type="text" name="displayName" [(ngModel)]="profile.displayName" required />
+				</p>
+				<p>
+					<label>Email</label>
+					<input type="email" name="email" [(ngModel)]="profile.email" required />
+				</p>
+				<p>
+					<button type="submit" class="btn btn-primary" [disabled]="!f.valid">Save</button>
+					<button type="button" class="btn" (click)="goBack()">Back</button>
+				</p>
+			</form>
+			<div *ngIf="profile.avatarUrl">
+				<img src="{{profile.avatarUrl}}" />
+			</div>
 		</div>
-
-		<div *ngIf="profile.avatarUrl">
-			<img src="{{profile.avatarUrl}}"/>
-		</div>
-
 	</div>
-	<hr/>
-	<button (click)="goBack()">Back</button>
-	<button (click)="save()">Save</button>
 </div>
+<p *ngIf="busy"><em>Busy...</em></p>
+
