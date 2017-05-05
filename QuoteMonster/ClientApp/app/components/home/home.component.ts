@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Quote, QuoteService } from '../../services/quote.service'
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subscription } from 'rxjs/Rx';
 
 @Component({
     selector: 'home',
@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/Rx';
 export class HomeComponent implements OnInit, OnDestroy  {
 
 	public quote: Quote;
+	private refreshSubscription: Subscription;
 
 	constructor(private quoteService: QuoteService) {
 	}
@@ -17,13 +18,14 @@ export class HomeComponent implements OnInit, OnDestroy  {
 	ngOnInit(): void {
 		console.log("ngOnInit");
 		this.refreshQuote();
-		Observable.interval(1000 * 20).subscribe(x => {
+		this.refreshSubscription = Observable.interval(1000 * 20).subscribe(x => {
 			this.refreshQuote();
 		});
 	}
 
 	ngOnDestroy(): void {
 		console.log("ngOnDestroy");
+		this.refreshSubscription.unsubscribe();
 	}
 
 
