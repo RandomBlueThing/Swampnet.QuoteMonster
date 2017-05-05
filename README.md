@@ -1,9 +1,9 @@
 # Swampnet.QuoteMonster
 
-## Dumb playaround app, built with:
+## Dumb learn-angular-playaround app, built with:
 
 * [ASP.NET Core](https://get.asp.net/) and [c#](https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx) for cross-platform server-side code.
-* [Angular 2](https://angular.io/) and [TypeScript](http://www.typescriptlang.org/) for client side code.
+* [Angular](https://angular.io/) and [TypeScript](http://www.typescriptlang.org/) for client side code.
 * [Webpack](https://webpack.github.io/) for building and bundling client resources.
 * [Bootstrap](http://getbootstrap.com/) for layout and styling.
 * [Auth0](https://auth0.com/) for authentication.
