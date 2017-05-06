@@ -29,11 +29,6 @@ export class AuthService {
 					console.log("user is inactive - logging out.")
 					this.logout();
 				}
-
-				if (this.profile.isNew) {
-					console.log("user is new - redirecting to profile.")
-					this.router.navigate(['/profile']);
-				}
 			});
 		});
 
