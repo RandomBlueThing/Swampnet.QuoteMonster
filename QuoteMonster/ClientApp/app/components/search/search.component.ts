@@ -2,7 +2,6 @@
 import { Router } from '@angular/router';
 import { Quote, QuoteService } from '../../services/quote.service'
 import { AuthService } from '../../services/auth.service'
-import { EditQuoteComponent } from './edit-quote.component';
 
 @Component({
 	selector: 'search',

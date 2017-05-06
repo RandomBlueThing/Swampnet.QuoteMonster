@@ -16,6 +16,11 @@
 						<span class='glyphicon glyphicon-search'></span> Search
 					</a>
 				</li>
+				<li [routerLinkActive]="['link-active']" *ngIf="auth.authenticated()">
+					<a [routerLink]="['/edit', 0]">
+						<span class='glyphicon glyphicon-plus'></span> New
+					</a>
+				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li [routerLinkActive]="['link-active']" *ngIf="auth.authenticated()">

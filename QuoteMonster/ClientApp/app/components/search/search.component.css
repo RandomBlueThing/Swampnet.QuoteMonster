@@ -18,3 +18,8 @@
 .result {
 	margin-bottom: 10px;
 }
+
+.centre {
+	margin: auto;
+	width: 25%;
+}

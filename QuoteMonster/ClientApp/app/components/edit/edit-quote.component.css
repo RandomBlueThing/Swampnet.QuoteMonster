@@ -1,7 +1,7 @@
 ﻿textarea {
-	width: 600px;
+	width: 100%;
 	height: 120px;
-	border: 1px solid;
+	resize: vertical;
 	padding: 5px;
 	font-family: Tahoma, sans-serif;
 }
