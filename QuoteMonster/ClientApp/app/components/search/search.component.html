@@ -40,13 +40,9 @@
 	</div>
 </div>
 
-<span>
-	<button [disabled]="busy" type="button" class="btn" (click)="previousPage()">Prev</button>
-	<button [disabled]="busy" type="button" class="btn" (click)="nextPage()">Next</button>
-</span>
-
-<div>
-	<button [disabled]="busy" type="button" class="btn btn-primary" (click)="newQuote()" *ngIf="auth.authenticated()">New</button>
+<div class="centre">
+	<button [disabled]="busy" type="button" class="btn" (click)="previousPage()"><span class="edit glyphicon glyphicon-chevron-left"></span></button>
+	<button [disabled]="busy" type="button" class="btn" (click)="nextPage()"><span class="edit glyphicon glyphicon-chevron-right"></span></button>
 </div>
 
 <div>page: {{page}} busy: {{busy}}</div>

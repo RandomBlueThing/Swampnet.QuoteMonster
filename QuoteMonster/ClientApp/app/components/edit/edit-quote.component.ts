@@ -26,9 +26,14 @@ export class EditQuoteComponent implements OnInit {
 		this.busy = true;
 		this.route.params
 			.switchMap((params: Params) => this.quoteService.getQuote(+params['id']))
-			.subscribe(result => {
+			.subscribe(
+			result => {
 				this.quote = result.json() as Quote;
 				this.busy = false;
+			},
+			error => {
+				console.log("Error: " + error.message);
+				this.goBack();
 			});
 
 		this.quoteService.getAuthors()
@@ -38,10 +43,16 @@ export class EditQuoteComponent implements OnInit {
 
 	save(): void {
 		this.busy = true;
-		this.quoteService.save(this.quote).subscribe(result => {
-			this.busy = false;
-			this.goBack();
-		});
+		this.quoteService.save(this.quote).subscribe(
+			result => {
+				this.busy = false;
+				this.goBack();
+			},
+			error => {
+				console.log("Error: " + error.message);
+				this.goBack();
+			}
+		);
 		
 	}
 

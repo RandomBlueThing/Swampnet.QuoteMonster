@@ -16,11 +16,20 @@
 						<span class='glyphicon glyphicon-search'></span> Search
 					</a>
 				</li>
+				<li [routerLinkActive]="['link-active']" *ngIf="auth.authenticated()">
+					<a [routerLink]="['/edit', 0]">
+						<span class='glyphicon glyphicon-plus'></span> New
+					</a>
+				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li [routerLinkActive]="['link-active']" *ngIf="auth.authenticated()">
 					<a [routerLink]="['/profile']">
-						<span class='glyphicon glyphicon-user'></span>
+						<span *ngIf="!auth.profile || !auth.profile.avatarUrl" class='glyphicon glyphicon-user'></span>
+						<span *ngIf="auth.profile && auth.profile.avatarUrl">
+							<img src="{{auth.profile.avatarUrl}}" height="16" width="16" />
+						</span>
+
 						<span *ngIf="!auth.profile">Profile</span>
 						<span *ngIf="auth.profile">{{auth.profile.displayName}}</span>
 					</a>

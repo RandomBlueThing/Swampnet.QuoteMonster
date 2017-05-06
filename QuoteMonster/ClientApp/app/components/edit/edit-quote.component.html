@@ -1,0 +1,22 @@
+﻿<div class="edit-quote container" *ngIf="quote">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<span class="edit glyphicon glyphicon-pencil"> Edit</span>
+		</div>
+		<div class="panel-body">
+			<form #f="ngForm" (ngSubmit)="save()">
+				<p>
+					<textarea name="quoteText" [(ngModel)]="quote.text" required placeholder="Enter quote here..."></textarea>
+				</p>
+				<p>
+					<input type="text" name="author" no-match-found-text="Create new" auto-complete [(ngModel)]="quote.author" [source]="authors" required placeholder="Author" />
+				</p>
+				<p>
+					<button type="submit" class="btn btn-primary" [disabled]="!f.valid">Save</button>
+					<button type="button" class="btn" (click)="goBack()">Back</button>
+				</p>
+			</form>
+		</div>
+	</div>
+</div>
+<p *ngIf="busy"><em>Busy...</em></p>

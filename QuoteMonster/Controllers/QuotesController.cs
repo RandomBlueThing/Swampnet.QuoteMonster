@@ -73,7 +73,7 @@ namespace QuoteMonster.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public QuoteViewModel Save([FromBody] QuoteViewModel quote)
+		public IActionResult Save([FromBody] QuoteViewModel quote)
 		{
 			var user = _userManagement.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
@@ -96,12 +96,14 @@ namespace QuoteMonster.Controllers
 				if(q == null)
 				{
 					// return 404?
+					return NotFound();
 				}
 				else
 				{
 					if(q.CreatedByUserId != user.Id)
 					{
 						// Not created by this user??
+						return Unauthorized();
 					}
 				}
 			}
@@ -123,7 +125,7 @@ namespace QuoteMonster.Controllers
 
 			_context.SaveChanges();
 
-			return quote;
+			return Ok(quote);
 		}
 
 
