@@ -49,11 +49,6 @@ export class SearchComponent implements OnInit {
 			});
 	}
 
-
-	newQuote() {
-		this.router.navigate(['/edit', 0]);
-	}
-
 	nextPage() {
 		this.page++;
 		this.refresh();
@@ -64,6 +59,17 @@ export class SearchComponent implements OnInit {
 			this.page--;
 			this.refresh();
 		}
+	}
+
+
+	deleteQuote(id: number) {
+		console.log("@TODO: Confirm delete: " + id);
+		this.busy = true;
+		this.quoteService.deleteQuote(id)
+			.subscribe(result => {
+				this.refresh();
+				this.busy = false;
+			});
 	}
 }
 

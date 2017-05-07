@@ -31,6 +31,7 @@ namespace QuoteMonster.Model
 			IEnumerable<Quote> quotes = _context.Quotes
 				.Include(q => q.CreatedBy)
 				.Include(q => q.Author)
+				.Where(q => q.IsEnabled)
 				;
 			
 			if (!string.IsNullOrEmpty(text))
@@ -56,7 +57,7 @@ namespace QuoteMonster.Model
 
 		public Quote GetRandom()
 		{
-			return _context.Quotes.Include(q => q.Author).OrderBy(q => Guid.NewGuid()).First();
+			return _context.Quotes.Include(q => q.Author).Where(q => q.IsEnabled).OrderBy(q => Guid.NewGuid()).First();
 		}
 
 		public Quote CreateQuote(User user)
@@ -64,7 +65,8 @@ namespace QuoteMonster.Model
 			var quote = new Quote()
 			{
 				CreatedByUserId = user.Id,
-				CreatedOn = DateTime.UtcNow
+				CreatedOn = DateTime.UtcNow,
+				IsEnabled = true
 			};
 
 			_context.Quotes.Add(quote);
@@ -80,6 +82,11 @@ namespace QuoteMonster.Model
 		internal IEnumerable<string> AllAuthors()
 		{
 			return _context.Authors.Select(a => a.Name);
+		}
+
+		internal void DeleteQuote(Quote q)
+		{
+			q.IsEnabled = false;
 		}
 	}
 }

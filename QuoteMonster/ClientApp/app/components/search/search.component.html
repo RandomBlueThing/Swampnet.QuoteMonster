@@ -36,6 +36,9 @@
 		</div>
 		<div class="col-md-1">
 			<span class="edit glyphicon glyphicon-pencil" [routerLink]="['/edit', quote.id]" *ngIf="quote.canEdit"></span>
+			<span class="edit glyphicon glyphicon-trash" (click)="deleteQuote(quote.id)" *ngIf="quote.canEdit"></span>
+			<!--<span class="edit glyphicon glyphicon-trash" (click)="confirm.show()" *ngIf="quote.canEdit"></span>-->
+			
 		</div>
 	</div>
 </div>
@@ -45,4 +48,16 @@
 	<button [disabled]="busy" type="button" class="btn" (click)="nextPage()"><span class="edit glyphicon glyphicon-chevron-right"></span></button>
 </div>
 
+<!--<app-modal #confirm>
+	<div class="app-modal-header">
+		header
+	</div>
+	<div class="app-modal-body">
+		Really delete?
+	</div>
+	<div class="app-modal-footer">
+		<button type="button" class="btn btn-default" (click)="confirm.hide()">Close</button>
+		<button type="button" class="btn btn-primary" (click)="confirm.hide(); deleteQuote(1234)">Save changes</button>
+	</div>
+</app-modal>-->
 <div>page: {{page}} busy: {{busy}}</div>
