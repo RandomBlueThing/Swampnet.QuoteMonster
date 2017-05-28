@@ -28,11 +28,12 @@ namespace QuoteMonster.Model
 
 		public IEnumerable<Quote> Search(User user, string text, string author, int? page, int? pageSize)
 		{
-			IEnumerable<Quote> quotes = _context.Quotes
+			var quotes = _context.Quotes
 				.Include(q => q.CreatedBy)
 				.Include(q => q.Author)
-				.Where(q => q.IsEnabled)
-				;
+				.AsQueryable();
+
+			quotes = quotes.Where(q => q.IsEnabled);
 			
 			if (!string.IsNullOrEmpty(text))
 			{
