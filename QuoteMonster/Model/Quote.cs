@@ -14,5 +14,6 @@ namespace QuoteMonster.Model
 		public User CreatedBy { get; set; }
 		public int AuthorId { get; set; }
 		public Author Author { get; set; }
+		public bool IsEnabled { get; set; }
 	}
 }

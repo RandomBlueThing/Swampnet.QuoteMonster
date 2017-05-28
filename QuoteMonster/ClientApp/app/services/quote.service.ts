@@ -33,6 +33,10 @@ export class QuoteService {
 			JSON.stringify(quote));
 	}
 
+	deleteQuote(id: number) {
+		return this.http.delete('/api/Quotes/' + id);
+	}
+
 }
 
 export interface Author {

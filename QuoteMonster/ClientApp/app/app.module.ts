@@ -12,6 +12,7 @@ import { AboutComponent } from './components/about/about.component';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { QuoteService } from './services/quote.service';
 import { AuthService } from './services/auth.service';
+import { ModalComponent } from './components/modal/modal.component';
 import { AuthenticatedHttp } from './services/authenticated-http.service';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 
@@ -24,13 +25,14 @@ import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 		SearchComponent,
 		EditQuoteComponent,
 		EditProfileComponent,
-		AboutComponent
+		AboutComponent,
+		ModalComponent
 	],
 	providers: [
 		AUTH_PROVIDERS,
 		QuoteService,
 		AuthService,
-		AuthenticatedHttp
+		AuthenticatedHttp		
 	],
     imports: [
 		UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.

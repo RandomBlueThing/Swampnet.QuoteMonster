@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using QuoteMonster.Services;
 using QuoteMonster.ViewModels;
 using System;
+using System.Threading.Tasks;
 
 namespace QuoteMonster.Controllers
 {
@@ -77,10 +78,6 @@ namespace QuoteMonster.Controllers
 		{
 			var user = _userManagement.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-			// @TODO: If we're updating an existing Quote, we should make sure it was actually created by this user (which probably means
-			//		  reloading it 'cos we shouldn't trust the data being passed to us!)
-			//	- isn't there an anti-tamper thing we can do or is that MVC only?
-
 			var repo = new QuoteRepository(_context);
 			Quote q;
 
@@ -136,6 +133,42 @@ namespace QuoteMonster.Controllers
 			var repo = new QuoteRepository(_context);
 
 			return repo.GetRandom().ToViewModel();
+		}
+
+
+		// DELETE: api/Quotes/5
+		[HttpDelete("{id}")]
+		[Authorize]
+		public async Task<IActionResult> DeleteQuote([FromRoute] int id)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			var user = _userManagement.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+			var repo = new QuoteRepository(_context);
+			var q = repo.Search(id);
+			if (q == null)
+			{
+				// return 404?
+				return NotFound();
+			}
+			else
+			{
+				if (q.CreatedByUserId != user.Id)
+				{
+					// Not created by this user??
+					return Unauthorized();
+				}
+			}
+
+			repo.DeleteQuote(q);
+
+			await _context.SaveChangesAsync();
+
+			return Ok(user);
 		}
 	}
 }

@@ -42,4 +42,16 @@ export class AuthenticatedHttp {
 		  { headers: authHeader });
   }
 
+  delete(url) {
+	  let jwt = localStorage.getItem('id_token');
+	  let authHeader = new Headers();
+	  authHeader.append('Content-Type', 'application/json');
+	  if (jwt) {
+		  authHeader.append('Authorization', 'Bearer ' + jwt);
+	  }
+
+	  return this.http.delete(url, 
+		  { headers: authHeader });
+  }
+
 }
